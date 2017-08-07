@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Procure Eminence Theater</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="Procure Eminence Theater is a JavaScript application that makes YouTube video libraries easy to view on any website." />
+	<meta name="keywords" content="Procure Eminence Theater" />
+
+	<link rel="stylesheet" href="css/theater-app.css?v=8.7.2017.1" media="screen,projection,print" />
+	<!-- deferred scripts loaded at the end of the body element -->
+	<script src="js/jquery.js?v=3.2.1"></script>
+</head>
+
+
+<body style="background-color:#DDD;">
+
+	<div style="width:100%;height:110px;text-align:center;">
+		<div type="button" style="display:inline-block;width:260px;height:60px;background-color:#0200b6;color:white;font-weight:bold;font-size:24px;line-height:60px;cursor:pointer;" onclick="theater.open('jQuery_Intro_Tutorials')">Open Theater 1</div>
+	</div>
+	<div style="width:100%;height:110px;text-align:center;">
+		<div type="button" style="display:inline-block;width:260px;height:60px;background-color:#0200b6;color:white;font-weight:bold;font-size:24px;line-height:60px;cursor:pointer;" onclick="theater.open('Github_Tutorials')">Open Theater 2</div>
+	</div>
+
+	<!-- Procure Eminence Theater HTML Begins -->
+	<div id="shader" onclick="theater.close()"></div>
+	<div id="settings">
+		<div id="closeTheaterControlBox" onclick="theater.close()">Close<span style="color:#222222;">_</span>App</div>
+	</div>
+	<div id="video"></div>
+	<div id="controller">
+		<div id="controllerTitle">Videos</div>
+		<div id="controllerInnerBox">
+			<select class="videoSelector" id="Github_Tutorials" onchange="theater.changeVideo(this.value)">
+				<option selected="selected" value="0fKg7e37bQE">Basics For Mac or Windows</option>
+				<option value="oFYyTZwMyAg">Pull Requests, Branches, Merging & Team Workflow</option>
+			</select>
+			<select class="videoSelector" id="jQuery_Intro_Tutorials" onchange="theater.changeVideo(this.value)">
+				<option selected="selected" value="hMxGhHNOkCU">Intro</option>
+				<option value="G-POtu9J-m4">Event Binding</option>
+				<option value="Cc3K2jDdKTo">Writing Smarter, Better Code</option>
+				<option value="LYKRkHSLE2E">DOM Traversal</option>
+				<option value="1nWrIBB_bMA">Building a Tab Panel</option>
+				<option value="KkzVFB3Ba_o">Image Slider</option>
+			</select>
+		</div>
+	</div>
+	<!-- Procure Eminence Theater HTML Ends -->
+
+	<!-- Deferred Javascript Source Files -->
+	<script src="js/theater-app.js?v=8.7.2017.1"></script>
+	<!-- End of Deferred Javascript Source Files -->
+</body>
+</html>

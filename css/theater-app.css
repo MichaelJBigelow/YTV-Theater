@@ -1,0 +1,112 @@
+#shader{
+	display:none;
+	opacity:0.00;
+	z-index:100000;
+	border:none;
+	cursor:pointer;
+	}
+#settings{
+	display:none;
+	height:45px;
+	width:0px;
+	position:fixed;
+	top:35px;
+	z-index:100002;
+	left:0px;
+	border-color:#DDDDDD;
+	border-width:2px 2px 2px 0px;
+	border-style:solid;
+	border-top-right-radius:5px;
+	border-bottom-right-radius:5px;
+	padding-right:5px;
+	background-color:#222222;
+	color:#FFFFFF;
+	overflow-x:hidden;
+	}
+#closeTheaterControlBox{
+	text-align:center;
+	font: bold 18px/100% Times New Roman !important;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	top:10px;
+	position:relative;
+	height:22px;
+	margin-top:3px;
+	cursor:pointer;
+	line-height:100% !important;
+	}
+#video{
+	display:none;
+	padding:10px;
+	margin:0px;
+	color:white;
+	text-align:center;
+	font-size:25px;
+	}
+.videoSmallScreen{
+	top:53px !important;
+	position:absolute !important;
+}
+#controller{
+	display:none;
+	text-decoration:none !important;
+	height:75px;
+	width:0px;
+	position:fixed;
+	top:35px;
+	z-index:100002;
+	right:0px;
+	border-color:#DDDDDD;
+	border-width:2px 0px 2px 2px;
+	border-style:solid;
+	border-top-left-radius:5px;
+	border-bottom-left-radius:5px;
+	padding-left:5px;
+	background-color:#222222;
+	color:#FFFFFF;
+	overflow-x:hidden;
+	}
+.controllerSmallScreen{
+	top:0px !important;
+	position:absolute !important;
+	height:60px !important;
+	width:281px !important;
+	border-width:0px 2px 2px 2px !important;
+	border-top-left-radius:0px !important;
+	border-bottom-left-radius:5px !important;
+	border-top-right-radius:0px !important;
+	border-bottom-right-radius:5px !important;
+	right:auto !important;
+	left:50% !important;
+	margin-left: -145px;
+}
+#controllerTitle{
+	text-align:center;
+	font: bold 18px/100% Times New Roman !important;
+	overflow:hidden;
+	margin-top:9px;
+	position:relative;
+	margin-bottom:2px;
+	line-height:100% !important;
+	}
+#controllerInnerBox{
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	padding:0px;
+	margin:0px;
+	line-height:100%;
+	}
+.videoSelector{
+	display:none;
+	position:relative;
+	top:0px;
+	margin-top:6px;
+	padding-top:0px;
+	font: 16px/100% Times New Roman !important;
+	border-radius:2px;
+	border-color:#444444;
+	line-height:100% !important;
+	width:150px;
+	margin:auto;
+	}
