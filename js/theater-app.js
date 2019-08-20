@@ -4,7 +4,7 @@ var theater = {
 	blacken:                       0.96,
 	sidePanelWidth:                0,
 	sidePanelWidth2:               120,
-	animation:                     0, // Open() & Close() animation. 1=on, 2=0ff
+	animation:                     0, // Open() & Close() animation. 1=on, 0=0ff
 	timer:                         '',
 	videoList:                     '', // Selected video list
 	userWidth:                     window.innerWidth,
