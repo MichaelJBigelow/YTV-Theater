@@ -46,7 +46,7 @@ var theater = {
 		//if(this.userWidth < 810){alert('Small Screen: Body width is ' + this.userWidth);}else{alert('Big Screen: Body width is ' + this.userWidth);}
 		
 		this.active                       = 1; // Save app state as "on"
-		this.shaderLeftPosition           = (this.bodyWidth/2) - this.userWidth;
+		this.shaderLeftPosition           = ( this.bodyWidth / 2 ) - this.userWidth;
 		this.shader.style.position        = 'fixed';
 		this.shader.style.width           = '100%';
 		this.shader.style.height          = '100%';
@@ -77,12 +77,12 @@ var theater = {
 	
 	initializeApp: function(){ // Initialize app, call openControls() and call changeVideo()
 
-		this.videoWidth = Math.round(this.userWidth * .55); // Calculates video container width based on %55 of viewable area in browser
+		this.videoWidth = Math.round( this.userWidth * .55 ); // Calculates video container width based on %55 of viewable area in browser
 
 		if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video container width and height are within YouTube required specifications
 
-		this.videoHeight              = Math.round(this.videoWidth * .8235); // Calculates video container height based on YouTube recommended aspect ratio
-		this.videoOffset              = Math.round(this.videoWidth/2); // Centers video based on current browser width
+		this.videoHeight              = Math.round( this.videoWidth * .8235 ); // Calculates video container height based on YouTube recommended aspect ratio
+		this.videoOffset              = Math.round( this.videoWidth / 2 ); // Centers video based on current browser width
 		this.video.style.display      = 'block';
 		this.video.style.zIndex       = '100002';
 		this.video.style.position     = 'fixed';
