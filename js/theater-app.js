@@ -98,10 +98,6 @@ var theater = {
 
 			window.addEventListener( 'resize', function(){ theater.autoResize(); }, false );
 
-		}else if( window.attachEvent ){ // IE version
-
-			window.attachEvent( 'resize', function(){ theater.autoResize(); } );
-
 		}
 
 	},
