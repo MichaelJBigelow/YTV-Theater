@@ -24,10 +24,10 @@ var theater = {
 		this.videoList = videoListSelect;
 		if(typeof $('#'+this.videoList)[0] === "undefined"){
 			if(typeof videoListSelect === "undefined" || videoListSelect === ""){
-				var errorMessage = "That is not a valid playlist name. Please let us know if have received this error message.";
+				var errorMessage = "That is not a valid playlist name.";
 			}else{
 				var selectedVideoList = videoListSelect.replace(/_/g," ");
-				var errorMessage = "The "+selectedVideoList+" video list no longer exists. Please let us know if have received this error message.";
+				var errorMessage = "The "+selectedVideoList+" video playlist no longer exists.";
 			}
 			alert(errorMessage);
 			return;
