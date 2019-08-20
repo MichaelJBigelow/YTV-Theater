@@ -6,7 +6,7 @@ var theater = {
 	animation: 0, //Open() & Close() animation. 1=on, 2=0ff
 	timer: '',
 	videoList: '', //Selected video list
-	userWidth: window.innerWidth || document.documentElement.clientWidth,//Patch for IE8 window width
+	userWidth: window.innerWidth,
 	bodyWidth: document.body.offsetWidth,
 	videoSelectorLargeScreenWidth: 135,
 	videoSelectorSmallScreenWidth: 220,
@@ -47,25 +47,7 @@ var theater = {
 		this.shader.style.zIndex='100000';
 		this.shader.style.left='0px';
 		this.shader.style.top='0px';
-		//Hide all flash objects and iframes to prevent overlap in Chrome, IE8 and IE9
-		var iframeLength = document.getElementsByTagName('iframe').length;
-		var embedLength = document.getElementsByTagName('embed').length;
-		var objectLength = document.getElementsByTagName('object').length;
-		if(iframeLength != 0){
-			for(T=0; T<iframeLength; T++){
-				document.getElementsByTagName('iframe')[T].style.visibility='hidden';
-			}
-		}
-		if(embedLength != 0){
-			for(T=0; T<embedLength; T++){
-				document.getElementsByTagName('embed')[T].style.visibility='hidden';
-			}
-		}
-		if(objectLength != 0){
-			for(T=0; T<objectLength; T++){
-				document.getElementsByTagName('object')[T].style.visibility='hidden';
-			}
-		}
+
 		this.fadeToBlack();
 	},
 	
@@ -171,32 +153,13 @@ var theater = {
 			this.controller.style.display = 'none';
 			this.settings.style.display = 'none';
 			this.fadeToClear();
-			//Restore flash content contained within iframe or embed tags
-			var iframeLength = document.getElementsByTagName('iframe').length;
-			var embedLength = document.getElementsByTagName('embed').length;
-			var objectLength = document.getElementsByTagName('object').length;
-			if(iframeLength != 0){
-				for(T=0; T<iframeLength; T++){
-					document.getElementsByTagName('iframe')[T].style.visibility='visible';
-				}
-			}
-			if(embedLength != 0){
-				for(T=0; T<embedLength; T++){
-					document.getElementsByTagName('embed')[T].style.visibility='visible';
-				}
-			}
-			if(objectLength != 0){
-				for(T=0; T<objectLength; T++){
-					document.getElementsByTagName('object')[T].style.visibility='visible';
-				}
-			}
 		}//"Close" loop ended
 	},
 	
 	autoResize: function (){//Called when viewer resizes browser window
 		//Check if app is active.
 		if(this.active == 1){
-			this.userWidth = window.innerWidth || document.documentElement.clientWidth;//Patch for IE8 window width
+			this.userWidth = window.innerWidth;
 			
 			//Check device view size
 			if(this.userWidth > 810){
