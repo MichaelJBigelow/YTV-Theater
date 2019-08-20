@@ -138,13 +138,12 @@ var theater = {
 
 		var videoSelect = $('#'+this.videoList)[0].value;
 		videoSelect     = videoSelect.replace( / /g, '' );
-		var html5       = "?html5=1";
 
 		if( ID != "void" && videoSelect != '' && videoSelect.length == 11 ){
 
 			var videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube" src="https://www.youtube.com/embed/';
-			var videoCode2       =  '" frameborder="0" allowfullscreen></iframe>';
-			this.video.innerHTML = videoCode1 + videoSelect + html5 + videoCode2;
+			var videoCode2       = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+			this.video.innerHTML = videoCode1 + videoSelect + videoCode2;
 
 			// Custom Google Analytics tracking code
 			/*var pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoSelect;
@@ -157,13 +156,13 @@ var theater = {
 		}else if( videoSelect.length != 11 && videoSelect != '' ){
 
 			var videoCode1       = 'Video ID is invalid.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
-			var videoCode2       = 'frameborder="0" allowfullscreen></iframe>';
+			var videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 			this.video.innerHTML = videoCode1 + videoCode2;
 
 		}else{
 
 			var videoCode1       = 'Video is not available.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
-			var videoCode2       = 'frameborder="0" allowfullscreen></iframe>';
+			var videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 			this.video.innerHTML = videoCode1 + videoCode2;
 
 		}
