@@ -134,8 +134,6 @@ var theater = {
 		
 	},
 	
-	
-	
 	changeVideo: function( ID ){
 
 		var videoSelect = $('#'+this.videoList)[0].value;
@@ -149,12 +147,12 @@ var theater = {
 			this.video.innerHTML = videoCode1 + videoSelect + html5 + videoCode2;
 
 			// Custom Google Analytics tracking code
-			var pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoSelect;
+			/*var pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoSelect;
 
 			ga('send', {
 			  hitType: 'pageview',
 			  page: pageValue
-			});
+			});*/
 
 		}else if( videoSelect.length != 11 && videoSelect != '' ){
 
