@@ -23,7 +23,7 @@ var theater = {
 	controller:                    $("#controller")[0],
 	settings:                      $("#settings")[0],
 	
-	initialize: function(){ // Initialize app, call openControls() and call changeVideo()
+	initialize: function(){ // Initialize app
 
 		this.videoWidth = Math.round( this.userWidth * .55 ); // Calculates video container width based on %55 of viewable area in browser
 
