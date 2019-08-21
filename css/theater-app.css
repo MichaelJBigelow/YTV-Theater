@@ -1,8 +1,8 @@
 #shader{
 	display:none;
-	opacity:0.00;
 	z-index:100000;
 	border:none;
+	background-color:rgb(10, 10, 10);
 	cursor:pointer;
 	}
 #settings{

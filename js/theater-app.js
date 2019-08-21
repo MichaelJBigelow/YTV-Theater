@@ -5,7 +5,6 @@ var theater = {
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
 	active:                        0, // Used to determine if the app is open or closed.
-	blacken:                       0.96,
 	sidePanelWidth:                0,
 	sidePanelWidth2:               120,
 	animation:                     0, // Open() & Close() animation. 1=on, 0=0ff
@@ -88,32 +87,17 @@ var theater = {
 		this.shader.style.left            = '0px';
 		this.shader.style.top             = '0px';
 
-		this.fadeToBlack();
-
 	},
 
 		
 	close: function(){
 
 		this.closeControls();
-		var video           = $('#video')[0];
-		video.style.display = 'none';
-		video.innerHTML     = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
-		this.active         = 0;
-
-	},
-	
-	fadeToBlack: function(){ // Fade users screen to black and call initializeApp
-
-		this.shader.style.opacity = this.blacken;
-		this.initializeApp();
-
-	},
-	
-	fadeToClear: function(){
-
-		this.shader.style.opacity = 0.00;
+		var video                 = $('#video')[0];
+		video.style.display       = 'none';
+		video.innerHTML           = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
 		this.shader.style.display = 'none';
+		this.active               = 0;
 
 	},
 	
@@ -208,7 +192,6 @@ var theater = {
 
 			this.controller.style.display = 'none';
 			this.settings.style.display   = 'none';
-			this.fadeToClear();
 
 		} // "Close" loop ended
 
