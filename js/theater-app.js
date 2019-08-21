@@ -211,10 +211,8 @@ var theater = {
 			this.userWidth = window.innerWidth;
 			
 			// Check device view size
-			if( this.userWidth > 810 ){
+			if( this.userWidth > 810 ){ // Large screens
 
-				// Larger screens
-				
 				// Calculates video container width based on 55% of viewable area in browser.
 				this.videoWidth             = Math.round( this.userWidth * .55 );
 				this.settings.style.display = "block";
@@ -225,10 +223,8 @@ var theater = {
 				
 				$('#'+this.videoList)[0].style.width = this.videoSelectorLargeScreenWidth + "px";
 
-			}else{
+			}else{ // Smaller screens
 
-				// Smaller screens
-				
 				// Calculates video container width based on 75% of viewable area in browser.
 				this.videoWidth = Math.round( this.userWidth * .75 );
 				
@@ -264,10 +260,8 @@ var theater = {
 		this.closeControls();
 		var video           = $('#video')[0];
 		video.style.display = 'none';
-
-		// Remove currently loaded/loading YouTube video to prevent background bandwidth usage
-		video.innerHTML = "<div id=\"YouTube\" style=\"display:none;\"></div>";
-		this.active     = 0;
+		video.innerHTML     = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
+		this.active         = 0;
 
 	}
 
