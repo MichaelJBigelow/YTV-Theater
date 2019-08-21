@@ -23,7 +23,7 @@ var theater = {
 	controller:                    $('#controller')[0],
 	settings:                      $('#settings')[0],
 	
-	initializeApp: function(){ // Initialize app, call openControls() and call changeVideo()
+	initialize: function(){ // Initialize app, call openControls() and call changeVideo()
 
 		this.videoWidth = Math.round( this.userWidth * .55 ); // Calculates video container width based on %55 of viewable area in browser
 
@@ -31,16 +31,12 @@ var theater = {
 
 		this.videoHeight              = Math.round( this.videoWidth * .8235 ); // Calculates video container height based on YouTube recommended aspect ratio
 		this.videoOffset              = Math.round( this.videoWidth / 2 ); // Centers video based on current browser width
-		this.video.style.display      = 'block';
 		this.video.style.zIndex       = '100002';
 		this.video.style.position     = 'fixed';
 		this.video.style.top          = '10px';
 		this.video.style.left         = '50%';
 		this.videoOffset             += 30; // Compensate for 30px of padding on "video" div
 		this.video.style.marginLeft   = "-" + this.videoOffset +'px';
-		this.controller.style.display = 'block';
-		this.settings.style.display   = 'block';
-		this.openControls();
 
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
 
@@ -86,6 +82,11 @@ var theater = {
 		this.shader.style.zIndex          = '100000';
 		this.shader.style.left            = '0px';
 		this.shader.style.top             = '0px';
+		this.video.style.display          = 'block';
+		this.controller.style.display     = 'block';
+		this.settings.style.display       = 'block';
+
+		this.openControls();
 
 	},
 
