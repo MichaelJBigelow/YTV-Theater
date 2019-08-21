@@ -17,7 +17,6 @@ var theater = {
 	videoWidth:                    0,
 	videoHeight:                   0,
 	videoOffset:                   0,
-	shaderLeftPosition:            0,
 	shader:                        $("#shader")[0],
 	video:                         $("#video")[0],
 	controller:                    $("#controller")[0],
@@ -72,16 +71,7 @@ var theater = {
 		//if(this.userWidth < 810){alert('Small Screen: Body width is ' + this.userWidth);}else{alert('Big Screen: Body width is ' + this.userWidth);}
 		
 		this.active                       = 1; // Save app state as "on"
-		this.shaderLeftPosition           = ( this.bodyWidth / 2 ) - this.userWidth;
-		this.shader.style.position        = "fixed";
-		this.shader.style.width           = "100%";
-		this.shader.style.height          = "100%";
 		this.shader.style.display         = "block";
-		this.shader.style.backgroundColor = "#010101";
-		this.shader.style.color           = "#FFFFFF";
-		this.shader.style.zIndex          = "100000";
-		this.shader.style.left            = "0px";
-		this.shader.style.top             = "0px";
 		this.video.style.display          = "block";
 		this.controller.style.display     = "block";
 		this.settings.style.display       = "block";
