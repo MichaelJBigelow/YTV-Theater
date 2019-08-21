@@ -88,6 +88,10 @@ var theater = {
 
 		this.openControls();
 
+		var defaultVideoSelect = $("#" + this.videoList)[0].value;
+		defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
+		this.loadVideo( defaultVideoSelect );
+
 	},
 
 		
@@ -157,10 +161,6 @@ var theater = {
 
 			}
 
-			var defaultVideoSelect = $("#" + this.videoList)[0].value;
-			defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
-			this.loadVideo( defaultVideoSelect );
-			
 			// Scroll to the top of the window
 			window.scrollTo( 0, 0 );
 			
