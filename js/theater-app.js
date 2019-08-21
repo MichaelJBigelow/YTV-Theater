@@ -102,26 +102,23 @@ var theater = {
 
 	},
 	
-	changeVideo: function( ID ){
+	changeVideo: function( videoId ){
 
-		var videoSelect = $("#" + this.videoList)[0].value;
-		videoSelect     = videoSelect.replace( / /g, "" );
-
-		if( ID != "void" && videoSelect != "" && videoSelect.length == 11 ){
+		if( videoId != "" && videoId.length == 11 ){
 
 			var videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube" src="https://www.youtube.com/embed/';
 			var videoCode2       = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-			this.video.innerHTML = videoCode1 + videoSelect + videoCode2;
+			this.video.innerHTML = videoCode1 + videoId + videoCode2;
 
 			// Custom Google Analytics tracking code
-			/*var pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoSelect;
+			/*var pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoId;
 
 			ga('send', {
 			  hitType: 'pageview',
 			  page: pageValue
 			});*/
 
-		}else if( videoSelect.length != 11 && videoSelect != "" ){
+		}else if( videoId.length != 11 && videoId != "" ){
 
 			var videoCode1       = 'Video ID is invalid.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
 			var videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
