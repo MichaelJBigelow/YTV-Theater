@@ -102,7 +102,7 @@ var theater = {
 
 	},
 	
-	changeVideo: function( videoId ){
+	loadVideo: function( videoId ){
 
 		if( videoId != "" && videoId.length == 11 ){
 
@@ -159,7 +159,7 @@ var theater = {
 
 			var defaultVideoSelect = $("#" + this.videoList)[0].value;
 			defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
-			this.changeVideo( defaultVideoSelect );
+			this.loadVideo( defaultVideoSelect );
 			
 			// Scroll to the top of the window
 			window.scrollTo( 0, 0 );
