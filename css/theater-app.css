@@ -43,11 +43,15 @@
 	}
 #video{
 	display:none;
+	position:fixed;
+	top:10px;
+	left:50%;
 	padding:10px;
 	margin:0px;
 	color:white;
 	text-align:center;
 	font-size:25px;
+	z-index:100002;
 	}
 .videoSmallScreen{
 	top:53px !important;

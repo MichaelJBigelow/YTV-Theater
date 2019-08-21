@@ -30,10 +30,6 @@ var theater = {
 
 		this.videoHeight              = Math.round( this.videoWidth * .8235 ); // Calculates video container height based on YouTube recommended aspect ratio
 		this.videoOffset              = Math.round( this.videoWidth / 2 ); // Centers video based on current browser width
-		this.video.style.zIndex       = "100002";
-		this.video.style.position     = "fixed";
-		this.video.style.top          = "10px";
-		this.video.style.left         = "50%";
 		this.videoOffset             += 30; // Compensate for 30px of padding on "video" div
 		this.video.style.marginLeft   = "-" + this.videoOffset + "px";
 
