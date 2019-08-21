@@ -109,7 +109,7 @@ var theater = {
 		this.sidePanelWidth        += 1;
 		this.controller.style.width = this.sidePanelWidth + 'px';
 		this.settings.style.width   = this.sidePanelWidth + 'px';
-		this.timer                  = setTimeout( function(){ this.openControls(); }, 10 );
+		this.timer                  = setTimeout( function(){ this.openControls(); }.bind(this), 10 );
 		
 		// Stop openControls() loop when complete side panel width is at full width
 		if( this.sidePanelWidth >= 160 || this.animation == 0 ){
@@ -178,7 +178,7 @@ var theater = {
 		this.sidePanelWidth        -= 1;
 		this.controller.style.width = this.sidePanelWidth + 'px';
 		this.settings.style.width   = this.sidePanelWidth + 'px';
-		this.timer                  = setTimeout( function(){ this.closeControls(); }, 1 );
+		this.timer                  = setTimeout( function(){ this.closeControls(); }.bind(this), 1 );
 
 		if( this.sidePanelWidth <= 0 || this.animation == 0 ){ // Stop 'close' loop when complete
 
