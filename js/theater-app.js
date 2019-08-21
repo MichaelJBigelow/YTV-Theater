@@ -1,7 +1,9 @@
 var theater = {
 
 	revision:                      "2019.8.20.1",
+	url:                           window.location.href,
 	urlOrigin:                     window.location.origin,
+	queryString:                   window.location.search,
 	active:                        0, // Used to determine if the app is open or closed.
 	blacken:                       0.96,
 	sidePanelWidth:                0,
