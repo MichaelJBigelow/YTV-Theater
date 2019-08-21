@@ -24,6 +24,33 @@ var theater = {
 	controller:                    $('#controller')[0],
 	settings:                      $('#settings')[0],
 	
+	initializeApp: function(){ // Initialize app, call openControls() and call changeVideo()
+
+		this.videoWidth = Math.round( this.userWidth * .55 ); // Calculates video container width based on %55 of viewable area in browser
+
+		if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video container width and height are within YouTube required specifications
+
+		this.videoHeight              = Math.round( this.videoWidth * .8235 ); // Calculates video container height based on YouTube recommended aspect ratio
+		this.videoOffset              = Math.round( this.videoWidth / 2 ); // Centers video based on current browser width
+		this.video.style.display      = 'block';
+		this.video.style.zIndex       = '100002';
+		this.video.style.position     = 'fixed';
+		this.video.style.top          = '10px';
+		this.video.style.left         = '50%';
+		this.videoOffset             += 30; // Compensate for 30px of padding on "video" div
+		this.video.style.marginLeft   = "-" + this.videoOffset +'px';
+		this.controller.style.display = 'block';
+		this.settings.style.display   = 'block';
+		this.openControls();
+
+		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
+
+			window.addEventListener( 'resize', function(){ theater.autoResize(); }, false );
+
+		}
+
+	},
+	
 	open: function( selectedList ){
 
 		this.videoList = selectedList;
@@ -64,6 +91,17 @@ var theater = {
 		this.fadeToBlack();
 
 	},
+
+		
+	close: function(){
+
+		this.closeControls();
+		var video           = $('#video')[0];
+		video.style.display = 'none';
+		video.innerHTML     = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
+		this.active         = 0;
+
+	},
 	
 	fadeToBlack: function(){ // Fade users screen to black and call initializeApp
 
@@ -77,65 +115,6 @@ var theater = {
 		this.shader.style.opacity = 0.00;
 		this.shader.style.display = 'none';
 
-	},
-	
-	initializeApp: function(){ // Initialize app, call openControls() and call changeVideo()
-
-		this.videoWidth = Math.round( this.userWidth * .55 ); // Calculates video container width based on %55 of viewable area in browser
-
-		if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video container width and height are within YouTube required specifications
-
-		this.videoHeight              = Math.round( this.videoWidth * .8235 ); // Calculates video container height based on YouTube recommended aspect ratio
-		this.videoOffset              = Math.round( this.videoWidth / 2 ); // Centers video based on current browser width
-		this.video.style.display      = 'block';
-		this.video.style.zIndex       = '100002';
-		this.video.style.position     = 'fixed';
-		this.video.style.top          = '10px';
-		this.video.style.left         = '50%';
-		this.videoOffset             += 30; // Compensate for 30px of padding on "video" div
-		this.video.style.marginLeft   = "-" + this.videoOffset +'px';
-		this.controller.style.display = 'block';
-		this.settings.style.display   = 'block';
-		this.openControls();
-
-		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
-
-			window.addEventListener( 'resize', function(){ theater.autoResize(); }, false );
-
-		}
-
-	},
-	
-	openControls: function(){ // Opens YouTube video selection controls
-
-		this.sidePanelWidth        += 1;
-		this.controller.style.width = this.sidePanelWidth + 'px';
-		this.settings.style.width   = this.sidePanelWidth + 'px';
-		this.timer                  = setTimeout( function(){ this.openControls(); }.bind(this), 10 );
-		
-		// Stop openControls() loop when complete side panel width is at full width
-		if( this.sidePanelWidth >= 160 || this.animation == 0 ){
-
-			clearTimeout( this.timer );
-			this.sidePanelWidth = 160;
-
-			if( this.animation == 0 ){ // No animation open
-
-				this.controller.style.width            = this.sidePanelWidth + 'px';
-				this.settings.style.width              = this.sidePanelWidth + 'px';
-				$('#'+this.videoList)[0].style.display = "block"; // Show selected video list
-
-			}
-
-			var defaultVideoSelect = $('#'+this.videoList)[0].value;
-			defaultVideoSelect     = defaultVideoSelect.replace( / /g, '' );
-			this.changeVideo( defaultVideoSelect );
-			
-			// Scroll to the top of the window
-			window.scrollTo( 0, 0 );
-			
-		}
-		
 	},
 	
 	changeVideo: function( ID ){
@@ -173,6 +152,38 @@ var theater = {
 
 		this.autoResize(); // Forces layout resize on initialization and video changes.
 
+	},
+
+	openControls: function(){ // Opens YouTube video selection controls
+
+		this.sidePanelWidth        += 1;
+		this.controller.style.width = this.sidePanelWidth + 'px';
+		this.settings.style.width   = this.sidePanelWidth + 'px';
+		this.timer                  = setTimeout( function(){ this.openControls(); }.bind(this), 10 );
+		
+		// Stop openControls() loop when complete side panel width is at full width
+		if( this.sidePanelWidth >= 160 || this.animation == 0 ){
+
+			clearTimeout( this.timer );
+			this.sidePanelWidth = 160;
+
+			if( this.animation == 0 ){ // No animation open
+
+				this.controller.style.width            = this.sidePanelWidth + 'px';
+				this.settings.style.width              = this.sidePanelWidth + 'px';
+				$('#'+this.videoList)[0].style.display = "block"; // Show selected video list
+
+			}
+
+			var defaultVideoSelect = $('#'+this.videoList)[0].value;
+			defaultVideoSelect     = defaultVideoSelect.replace( / /g, '' );
+			this.changeVideo( defaultVideoSelect );
+			
+			// Scroll to the top of the window
+			window.scrollTo( 0, 0 );
+			
+		}
+		
 	},
 	
 	closeControls: function(){
@@ -252,16 +263,6 @@ var theater = {
 			this.video.style.marginLeft = '-'+ this.videoOffset +'px'; // Apply new center location to the video container DIV
 
 		}
-
-	},
-	
-	close: function(){
-
-		this.closeControls();
-		var video           = $('#video')[0];
-		video.style.display = 'none';
-		video.innerHTML     = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
-		this.active         = 0;
 
 	}
 
