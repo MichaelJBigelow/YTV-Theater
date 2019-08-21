@@ -8,8 +8,8 @@ var theater = {
 	sidePanelWidth:                0,
 	sidePanelWidth2:               120,
 	animation:                     0, // Open() & Close() animation. 1=on, 0=0ff
-	timer:                         '',
-	videoList:                     '', // Selected video list
+	timer:                         "",
+	videoList:                     "", // Selected video list
 	userWidth:                     window.innerWidth,
 	bodyWidth:                     document.body.offsetWidth,
 	videoSelectorLargeScreenWidth: 135,
@@ -18,10 +18,10 @@ var theater = {
 	videoHeight:                   0,
 	videoOffset:                   0,
 	shaderLeftPosition:            0,
-	shader:                        $('#shader')[0],
-	video:                         $('#video')[0],
-	controller:                    $('#controller')[0],
-	settings:                      $('#settings')[0],
+	shader:                        $("#shader")[0],
+	video:                         $("#video")[0],
+	controller:                    $("#controller")[0],
+	settings:                      $("#settings")[0],
 	
 	initialize: function(){ // Initialize app, call openControls() and call changeVideo()
 
@@ -31,16 +31,16 @@ var theater = {
 
 		this.videoHeight              = Math.round( this.videoWidth * .8235 ); // Calculates video container height based on YouTube recommended aspect ratio
 		this.videoOffset              = Math.round( this.videoWidth / 2 ); // Centers video based on current browser width
-		this.video.style.zIndex       = '100002';
-		this.video.style.position     = 'fixed';
-		this.video.style.top          = '10px';
-		this.video.style.left         = '50%';
+		this.video.style.zIndex       = "100002";
+		this.video.style.position     = "fixed";
+		this.video.style.top          = "10px";
+		this.video.style.left         = "50%";
 		this.videoOffset             += 30; // Compensate for 30px of padding on "video" div
-		this.video.style.marginLeft   = "-" + this.videoOffset +'px';
+		this.video.style.marginLeft   = "-" + this.videoOffset + "px";
 
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
 
-			window.addEventListener( 'resize', function(){ theater.autoResize(); }, false );
+			window.addEventListener( "resize", function(){ theater.autoResize(); }, false );
 
 		}
 
@@ -50,7 +50,7 @@ var theater = {
 
 		this.videoList = selectedList;
 
-		if( typeof $('#'+this.videoList)[0] === "undefined" ){ // Check for valid video list
+		if( typeof $("#" + this.videoList)[0] === "undefined" ){ // Check for valid video list
 
 			if( typeof selectedList === "undefined" || selectedList === "" ){
 
@@ -73,18 +73,18 @@ var theater = {
 		
 		this.active                       = 1; // Save app state as "on"
 		this.shaderLeftPosition           = ( this.bodyWidth / 2 ) - this.userWidth;
-		this.shader.style.position        = 'fixed';
-		this.shader.style.width           = '100%';
-		this.shader.style.height          = '100%';
-		this.shader.style.display         = 'block';
-		this.shader.style.backgroundColor = '#010101';
-		this.shader.style.color           = '#FFFFFF';
-		this.shader.style.zIndex          = '100000';
-		this.shader.style.left            = '0px';
-		this.shader.style.top             = '0px';
-		this.video.style.display          = 'block';
-		this.controller.style.display     = 'block';
-		this.settings.style.display       = 'block';
+		this.shader.style.position        = "fixed";
+		this.shader.style.width           = "100%";
+		this.shader.style.height          = "100%";
+		this.shader.style.display         = "block";
+		this.shader.style.backgroundColor = "#010101";
+		this.shader.style.color           = "#FFFFFF";
+		this.shader.style.zIndex          = "100000";
+		this.shader.style.left            = "0px";
+		this.shader.style.top             = "0px";
+		this.video.style.display          = "block";
+		this.controller.style.display     = "block";
+		this.settings.style.display       = "block";
 
 		this.openControls();
 
@@ -94,20 +94,20 @@ var theater = {
 	close: function(){
 
 		this.closeControls();
-		var video                 = $('#video')[0];
-		video.style.display       = 'none';
+		var video                 = $("#video")[0];
+		video.style.display       = "none";
 		video.innerHTML           = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
-		this.shader.style.display = 'none';
+		this.shader.style.display = "none";
 		this.active               = 0;
 
 	},
 	
 	changeVideo: function( ID ){
 
-		var videoSelect = $('#'+this.videoList)[0].value;
-		videoSelect     = videoSelect.replace( / /g, '' );
+		var videoSelect = $("#" + this.videoList)[0].value;
+		videoSelect     = videoSelect.replace( / /g, "" );
 
-		if( ID != "void" && videoSelect != '' && videoSelect.length == 11 ){
+		if( ID != "void" && videoSelect != "" && videoSelect.length == 11 ){
 
 			var videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube" src="https://www.youtube.com/embed/';
 			var videoCode2       = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
@@ -121,7 +121,7 @@ var theater = {
 			  page: pageValue
 			});*/
 
-		}else if( videoSelect.length != 11 && videoSelect != '' ){
+		}else if( videoSelect.length != 11 && videoSelect != "" ){
 
 			var videoCode1       = 'Video ID is invalid.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
 			var videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
@@ -142,8 +142,8 @@ var theater = {
 	openControls: function(){ // Opens YouTube video selection controls
 
 		this.sidePanelWidth        += 1;
-		this.controller.style.width = this.sidePanelWidth + 'px';
-		this.settings.style.width   = this.sidePanelWidth + 'px';
+		this.controller.style.width = this.sidePanelWidth + "px";
+		this.settings.style.width   = this.sidePanelWidth + "px";
 		this.timer                  = setTimeout( function(){ this.openControls(); }.bind(this), 10 );
 		
 		// Stop openControls() loop when complete side panel width is at full width
@@ -154,14 +154,14 @@ var theater = {
 
 			if( this.animation == 0 ){ // No animation open
 
-				this.controller.style.width            = this.sidePanelWidth + 'px';
-				this.settings.style.width              = this.sidePanelWidth + 'px';
-				$('#'+this.videoList)[0].style.display = "block"; // Show selected video list
+				this.controller.style.width            = this.sidePanelWidth + "px";
+				this.settings.style.width              = this.sidePanelWidth + "px";
+				$("#" + this.videoList)[0].style.display = "block"; // Show selected video list
 
 			}
 
-			var defaultVideoSelect = $('#'+this.videoList)[0].value;
-			defaultVideoSelect     = defaultVideoSelect.replace( / /g, '' );
+			var defaultVideoSelect = $("#" + this.videoList)[0].value;
+			defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
 			this.changeVideo( defaultVideoSelect );
 			
 			// Scroll to the top of the window
@@ -174,8 +174,8 @@ var theater = {
 	closeControls: function(){
 
 		this.sidePanelWidth        -= 1;
-		this.controller.style.width = this.sidePanelWidth + 'px';
-		this.settings.style.width   = this.sidePanelWidth + 'px';
+		this.controller.style.width = this.sidePanelWidth + "px";
+		this.settings.style.width   = this.sidePanelWidth + "px";
 		this.timer                  = setTimeout( function(){ this.closeControls(); }.bind(this), 1 );
 
 		if( this.sidePanelWidth <= 0 || this.animation == 0 ){ // Stop 'close' loop when complete
@@ -185,14 +185,14 @@ var theater = {
 
 			if( this.animation == 0 ){ // No animation close
 
-				this.controller.style.width            = this.sidePanelWidth + 'px';
-				this.settings.style.width              = this.sidePanelWidth + 'px';
-				$('#'+this.videoList)[0].style.display = "none"; // Hide selected video list
+				this.controller.style.width            = this.sidePanelWidth + "px";
+				this.settings.style.width              = this.sidePanelWidth + "px";
+				$("#" + this.videoList)[0].style.display = "none"; // Hide selected video list
 
 			}
 
-			this.controller.style.display = 'none';
-			this.settings.style.display   = 'none';
+			this.controller.style.display = "none";
+			this.settings.style.display   = "none";
 
 		} // "Close" loop ended
 
@@ -216,7 +216,7 @@ var theater = {
 				this.controller.className = "";
 				this.video.className      = "";
 				
-				$('#'+this.videoList)[0].style.width = this.videoSelectorLargeScreenWidth + "px";
+				$("#" + this.videoList)[0].style.width = this.videoSelectorLargeScreenWidth + "px";
 
 			}else{ // Smaller screens
 
@@ -230,21 +230,21 @@ var theater = {
 				this.controller.className = "controllerSmallScreen";
 				this.video.className      = "videoSmallScreen";
 				
-				$('#'+this.videoList)[0].style.width = this.videoSelectorSmallScreenWidth + "px";
+				$("#" + this.videoList)[0].style.width = this.videoSelectorSmallScreenWidth + "px";
 
 			}
 
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
 			this.videoHeight            = Math.round( this.videoWidth * .8235 ); // Calculates video height based on YouTube recommended aspect ratio
-			var youTubeVideo            = $('#YouTube')[0];
-			this.video.style.width      = this.videoWidth + 'px';
-			this.video.style.height     = this.videoHeight + 'px';
-			youTubeVideo.style.width    = this.videoWidth + 'px';
-			youTubeVideo.style.height   = this.videoHeight + 'px';
+			var youTubeVideo            = $("#YouTube")[0];
+			this.video.style.width      = this.videoWidth + "px";
+			this.video.style.height     = this.videoHeight + "px";
+			youTubeVideo.style.width    = this.videoWidth + "px";
+			youTubeVideo.style.height   = this.videoHeight + "px";
 			this.videoOffset            = Math.round( this.videoWidth / 2 ); // Calculate videoContainer center position
 			this.videoOffset           += ( ( this.video.offsetWidth - youTubeVideo.offsetWidth ) / 2 ); // Compensate for 30px of padding on "video" div
-			this.video.style.marginLeft = '-'+ this.videoOffset +'px'; // Apply new center location to the video container DIV
+			this.video.style.marginLeft = "-" + this.videoOffset + "px"; // Apply new center location to the video container DIV
 
 		}
 
