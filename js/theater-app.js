@@ -5,10 +5,8 @@ var theater = {
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
 	active:                        false, // Used to determine if the app is open or closed.
-	timer:                         "",
 	videoList:                     "", // Selected video list
 	userWidth:                     window.innerWidth,
-	bodyWidth:                     document.body.offsetWidth,
 	videoWidth:                    0,
 	videoHeight:                   0,
 	videoOffset:                   0,
