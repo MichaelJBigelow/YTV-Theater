@@ -1,4 +1,4 @@
-#shader{
+#TheaterShader{
 	display:none;
 	position:fixed;
 	width:100%;
@@ -11,7 +11,7 @@
 	cursor:pointer;
 	z-index:100000;
 	}
-#video{
+#TheaterVideo{
 	display:none;
 	position:absolute;
 	top:53px;
@@ -23,7 +23,7 @@
 	font-size:25px;
 	z-index:100002;
 	}
-#controller{
+#TheaterController{
 	display:none;
 	text-decoration:none !important;
 	height:60px;
@@ -46,7 +46,7 @@
 	color:#FFFFFF;
 	overflow-x:hidden;
 	}
-.videoSelector{
+.theaterVideoSelector{
 	display:none;
 	position:relative;
 	top:0px;
