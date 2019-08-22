@@ -60,23 +60,6 @@
 	left:50% !important;
 	margin-left: -145px;
 }
-#controllerTitle{
-	text-align:center;
-	font: bold 18px/100% Times New Roman !important;
-	overflow:hidden;
-	margin-top:9px;
-	position:relative;
-	margin-bottom:2px;
-	line-height:100% !important;
-	}
-#controllerInnerBox{
-	text-align:center;
-	overflow:hidden;
-	position:relative;
-	padding:0px;
-	margin:0px;
-	line-height:100%;
-	}
 .videoSelector{
 	display:none;
 	position:relative;
