@@ -5,8 +5,6 @@ var theater = {
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
 	active:                        0, // Used to determine if the app is open or closed.
-	sidePanelWidth:                0,
-	animation:                     0, // Open() & Close() animation. 1=on, 0=0ff
 	timer:                         "",
 	videoList:                     "", // Selected video list
 	userWidth:                     window.innerWidth,
@@ -79,11 +77,12 @@ var theater = {
 	close: function(){
 
 		this.closeControls();
-		var video                 = $("#video")[0];
-		video.style.display       = "none";
-		video.innerHTML           = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
-		this.shader.style.display = "none";
-		this.active               = 0;
+		var video                     = $("#video")[0];
+		video.style.display           = "none";
+		video.innerHTML               = "<div id=\"YouTube\" style=\"display:none;\"></div>"; // Remove current YouTube video to prevent background bandwidth usage
+		this.shader.style.display     = "none";
+		this.controller.style.display = "none";
+		this.active                   = false;
 
 	},
 	
@@ -123,49 +122,18 @@ var theater = {
 
 	openControls: function(){ // Opens YouTube video selection controls
 
-		this.sidePanelWidth        += 1;
-		this.timer                  = setTimeout( function(){ this.openControls(); }.bind(this), 10 );
-		
-		// Stop openControls() loop when complete side panel width is at full width
-		if( this.sidePanelWidth >= 160 || this.animation == 0 ){
+		// Show selected video list
+		$("#" + this.videoList)[0].style.display = "block";
 
-			clearTimeout( this.timer );
-			this.sidePanelWidth = 160;
-
-			if( this.animation == 0 ){ // No animation open
-
-				this.controller.style.width            = this.sidePanelWidth + "px";
-				$("#" + this.videoList)[0].style.display = "block"; // Show selected video list
-
-			}
-
-			// Scroll to the top of the window
-			window.scrollTo( 0, 0 );
-			
-		}
+		// Scroll to the top of the window
+		window.scrollTo( 0, 0 );
 		
 	},
 	
 	closeControls: function(){
 
-		this.sidePanelWidth        -= 1;
-		this.timer                  = setTimeout( function(){ this.closeControls(); }.bind(this), 1 );
-
-		if( this.sidePanelWidth <= 0 || this.animation == 0 ){ // Stop 'close' loop when complete
-
-			clearTimeout( this.timer );
-			this.sidePanelWidth = 0;
-
-			if( this.animation == 0 ){ // No animation close
-
-				this.controller.style.width            = this.sidePanelWidth + "px";
-				$("#" + this.videoList)[0].style.display = "none"; // Hide selected video list
-
-			}
-
-			this.controller.style.display = "none";
-
-		} // "Close" loop ended
+		// Hide selected video list
+		$("#" + this.videoList)[0].style.display = "none";
 
 	},
 	
@@ -176,7 +144,7 @@ var theater = {
 
 			this.userWidth = window.innerWidth;
 
-			// Calculates video container width based on 75% of viewable area in browser.
+			// Calculates video container width based on 75% of viewable area in browser
 			this.videoWidth = Math.round( this.userWidth * .75 );
 
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
