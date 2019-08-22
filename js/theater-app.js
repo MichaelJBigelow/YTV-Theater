@@ -4,7 +4,7 @@ var theater = {
 	url:                           window.location.href,
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
-	active:                        0, // Used to determine if the app is open or closed.
+	active:                        false, // Used to determine if the app is open or closed.
 	timer:                         "",
 	videoList:                     "", // Selected video list
 	userWidth:                     window.innerWidth,
@@ -60,7 +60,7 @@ var theater = {
 		// debug
 		//if(this.userWidth < 810){alert('Small Screen: Body width is ' + this.userWidth);}else{alert('Big Screen: Body width is ' + this.userWidth);}
 		
-		this.active                       = 1; // Save app state as "on"
+		this.active                       = true;
 		this.shader.style.display         = "block";
 		this.video.style.display          = "block";
 		this.controller.style.display     = "block";
@@ -139,8 +139,8 @@ var theater = {
 	
 	autoResize: function(){ // Called when viewer resizes browser window
 
-		// Check if app is active.
-		if( this.active == 1 ){
+		// Check if app is open
+		if( this.active ){
 
 			this.userWidth = window.innerWidth;
 
