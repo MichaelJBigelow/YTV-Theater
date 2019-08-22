@@ -1,6 +1,6 @@
 var theater = {
 
-	revision:                      "2019.8.20.1",
+	revision:                      "8.22.2019.1",
 	url:                           window.location.href,
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
@@ -75,7 +75,7 @@ var theater = {
 	close: function(){
 
 		this.closeControls();
-		var video                     = $("#video")[0];
+		var video                     = $("#TheaterVideo")[0];
 		video.style.display           = "none";
 		video.innerHTML               = '<div id="YouTube" style="display:none;"></div>'; // Remove current YouTube video to prevent background bandwidth usage
 		this.shader.style.display     = "none";
