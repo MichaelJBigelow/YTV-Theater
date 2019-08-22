@@ -6,14 +6,11 @@ var theater = {
 	queryString:                   window.location.search,
 	active:                        0, // Used to determine if the app is open or closed.
 	sidePanelWidth:                0,
-	sidePanelWidth2:               120,
 	animation:                     0, // Open() & Close() animation. 1=on, 0=0ff
 	timer:                         "",
 	videoList:                     "", // Selected video list
 	userWidth:                     window.innerWidth,
 	bodyWidth:                     document.body.offsetWidth,
-	videoSelectorLargeScreenWidth: 135,
-	videoSelectorSmallScreenWidth: 220,
 	videoWidth:                    0,
 	videoHeight:                   0,
 	videoOffset:                   0,
@@ -127,7 +124,6 @@ var theater = {
 	openControls: function(){ // Opens YouTube video selection controls
 
 		this.sidePanelWidth        += 1;
-		this.controller.style.width = this.sidePanelWidth + "px";
 		this.timer                  = setTimeout( function(){ this.openControls(); }.bind(this), 10 );
 		
 		// Stop openControls() loop when complete side panel width is at full width
@@ -153,7 +149,6 @@ var theater = {
 	closeControls: function(){
 
 		this.sidePanelWidth        -= 1;
-		this.controller.style.width = this.sidePanelWidth + "px";
 		this.timer                  = setTimeout( function(){ this.closeControls(); }.bind(this), 1 );
 
 		if( this.sidePanelWidth <= 0 || this.animation == 0 ){ // Stop 'close' loop when complete
@@ -183,12 +178,6 @@ var theater = {
 
 			// Calculates video container width based on 75% of viewable area in browser.
 			this.videoWidth = Math.round( this.userWidth * .75 );
-			
-			// Add small screen modifier classes
-			this.controller.className = "controllerSmallScreen";
-			this.video.className      = "videoSmallScreen";
-			
-			$("#" + this.videoList)[0].style.width = this.videoSelectorSmallScreenWidth + "px";
 
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
