@@ -20,7 +20,6 @@ var theater = {
 	shader:                        $("#shader")[0],
 	video:                         $("#video")[0],
 	controller:                    $("#controller")[0],
-	settings:                      $("#settings")[0],
 	
 	initialize: function(){ // Initialize app
 
@@ -70,7 +69,6 @@ var theater = {
 		this.shader.style.display         = "block";
 		this.video.style.display          = "block";
 		this.controller.style.display     = "block";
-		this.settings.style.display       = "block";
 
 		this.openControls();
 
@@ -130,7 +128,6 @@ var theater = {
 
 		this.sidePanelWidth        += 1;
 		this.controller.style.width = this.sidePanelWidth + "px";
-		this.settings.style.width   = this.sidePanelWidth + "px";
 		this.timer                  = setTimeout( function(){ this.openControls(); }.bind(this), 10 );
 		
 		// Stop openControls() loop when complete side panel width is at full width
@@ -142,7 +139,6 @@ var theater = {
 			if( this.animation == 0 ){ // No animation open
 
 				this.controller.style.width            = this.sidePanelWidth + "px";
-				this.settings.style.width              = this.sidePanelWidth + "px";
 				$("#" + this.videoList)[0].style.display = "block"; // Show selected video list
 
 			}
@@ -158,7 +154,6 @@ var theater = {
 
 		this.sidePanelWidth        -= 1;
 		this.controller.style.width = this.sidePanelWidth + "px";
-		this.settings.style.width   = this.sidePanelWidth + "px";
 		this.timer                  = setTimeout( function(){ this.closeControls(); }.bind(this), 1 );
 
 		if( this.sidePanelWidth <= 0 || this.animation == 0 ){ // Stop 'close' loop when complete
@@ -169,13 +164,11 @@ var theater = {
 			if( this.animation == 0 ){ // No animation close
 
 				this.controller.style.width            = this.sidePanelWidth + "px";
-				this.settings.style.width              = this.sidePanelWidth + "px";
 				$("#" + this.videoList)[0].style.display = "none"; // Hide selected video list
 
 			}
 
 			this.controller.style.display = "none";
-			this.settings.style.display   = "none";
 
 		} // "Close" loop ended
 
@@ -187,35 +180,15 @@ var theater = {
 		if( this.active == 1 ){
 
 			this.userWidth = window.innerWidth;
+
+			// Calculates video container width based on 75% of viewable area in browser.
+			this.videoWidth = Math.round( this.userWidth * .75 );
 			
-			// Check device view size
-			if( this.userWidth > 810 ){ // Large screens
-
-				// Calculates video container width based on 55% of viewable area in browser.
-				this.videoWidth             = Math.round( this.userWidth * .55 );
-				this.settings.style.display = "block";
-				
-				// Remove small screen modifier classes
-				this.controller.className = "";
-				this.video.className      = "";
-				
-				$("#" + this.videoList)[0].style.width = this.videoSelectorLargeScreenWidth + "px";
-
-			}else{ // Smaller screens
-
-				// Calculates video container width based on 75% of viewable area in browser.
-				this.videoWidth = Math.round( this.userWidth * .75 );
-				
-				// Hide settings panel
-				this.settings.style.display = "none";
-				
-				// Add small screen modifier classes
-				this.controller.className = "controllerSmallScreen";
-				this.video.className      = "videoSmallScreen";
-				
-				$("#" + this.videoList)[0].style.width = this.videoSelectorSmallScreenWidth + "px";
-
-			}
+			// Add small screen modifier classes
+			this.controller.className = "controllerSmallScreen";
+			this.video.className      = "videoSmallScreen";
+			
+			$("#" + this.videoList)[0].style.width = this.videoSelectorSmallScreenWidth + "px";
 
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 

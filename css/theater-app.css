@@ -11,36 +11,6 @@
 	cursor:pointer;
 	z-index:100000;
 	}
-#settings{
-	display:none;
-	height:45px;
-	width:0px;
-	position:fixed;
-	top:35px;
-	z-index:100002;
-	left:0px;
-	border-color:#DDDDDD;
-	border-width:2px 2px 2px 0px;
-	border-style:solid;
-	border-top-right-radius:5px;
-	border-bottom-right-radius:5px;
-	padding-right:5px;
-	background-color:#222222;
-	color:#FFFFFF;
-	overflow-x:hidden;
-	}
-#closeTheaterControlBox{
-	text-align:center;
-	font: bold 18px/100% Times New Roman !important;
-	overflow-x:hidden;
-	overflow-y:hidden;
-	top:10px;
-	position:relative;
-	height:22px;
-	margin-top:3px;
-	cursor:pointer;
-	line-height:100% !important;
-	}
 #video{
 	display:none;
 	position:fixed;
