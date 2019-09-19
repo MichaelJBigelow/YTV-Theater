@@ -16,18 +16,11 @@ var theater = {
 	
 	initialize: function(){ // Initialize app
 
-		this.videoWidth = Math.round( this.userWidth * .55 ); // Calculates video container width based on %55 of viewable area in browser
-
-		if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video container width and height are within YouTube required specifications
-
-		this.videoHeight              = Math.round( this.videoWidth * .8235 ); // Calculates video container height based on YouTube recommended aspect ratio
-		this.videoOffset              = Math.round( this.videoWidth / 2 ); // Centers video based on current browser width
-		this.videoOffset             += 30; // Compensate for 30px of padding on "video" div
-		this.video.style.marginLeft   = "-" + this.videoOffset + "px";
+		this.setSize();
 
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
 
-			window.addEventListener( "resize", function(){ theater.autoResize(); }, false );
+			window.addEventListener( "resize", function(){ theater.setSize(); }, false );
 
 		}
 
@@ -71,7 +64,6 @@ var theater = {
 
 	},
 
-		
 	close: function(){
 
 		this.closeControls();
@@ -135,7 +127,7 @@ var theater = {
 
 	},
 	
-	autoResize: function(){ // Called when viewer resizes browser window
+	setSize: function(){ // Called when viewer resizes browser window
 
 		// Check if app is open
 		if( this.active ){
