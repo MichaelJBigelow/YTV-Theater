@@ -1,6 +1,6 @@
 var theater = {
 
-	revision:                      "8.22.2019.1",
+	revision:                      "9.19.2019.1",
 	url:                           window.location.href,
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
@@ -146,7 +146,7 @@ var theater = {
 			youTubeVideo.style.width    = this.videoWidth + "px";
 			youTubeVideo.style.height   = this.videoHeight + "px";
 			this.videoOffset            = Math.round( this.videoWidth / 2 ); // Calculate videoContainer center position
-			this.videoOffset           += ( ( this.video.offsetWidth - youTubeVideo.offsetWidth ) / 2 ); // Compensate for 30px of padding on "video" div
+			this.videoOffset           += ( ( this.video.offsetWidth - youTubeVideo.offsetWidth ) / 2 ); // Compensate for padding on "video" div
 			this.video.style.marginLeft = "-" + this.videoOffset + "px"; // Apply new center location to the video container DIV
 
 		}
