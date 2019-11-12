@@ -1,6 +1,6 @@
 var theater = {
 
-	revision:                      "9.19.2019.1",
+	revision:                      "11.12.2019.1",
 	url:                           window.location.href,
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
@@ -106,7 +106,7 @@ var theater = {
 
 		}
 
-		this.autoResize(); // Forces layout resize on initialization and video changes.
+		this.setSize(); // Forces layout resize on initialization and video changes.
 
 	},
 
