@@ -1,6 +1,6 @@
 var theater = {
 
-	revision:                      "11.12.2019.1",
+	revision:                      "3.14.2020.1",
 	url:                           window.location.href,
 	urlOrigin:                     window.location.origin,
 	queryString:                   window.location.search,
@@ -10,11 +10,15 @@ var theater = {
 	videoWidth:                    0,
 	videoHeight:                   0,
 	videoOffset:                   0,
-	shader:                        $("#pe-theater-shader")[0],
-	video:                         $("#pe-theater-video")[0],
-	controller:                    $("#pe-theater-controller")[0],
+	shader:                        null,
+	video:                         null,
+	controller:                    null,
 	
 	initialize: function(){ // Initialize app
+
+		this.shader     = $("#pe-theater-shader")[0];
+		this.video      = $("#pe-theater-video")[0];
+		this.controller = $("#pe-theater-controller")[0];
 
 		this.setSize();
 
