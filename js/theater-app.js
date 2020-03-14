@@ -10,9 +10,9 @@ var theater = {
 	videoWidth:                    0,
 	videoHeight:                   0,
 	videoOffset:                   0,
-	shader:                        $("#TheaterShader")[0],
-	video:                         $("#TheaterVideo")[0],
-	controller:                    $("#TheaterController")[0],
+	shader:                        $("#pe-theater-shader")[0],
+	video:                         $("#pe-theater-video")[0],
+	controller:                    $("#pe-theater-controller")[0],
 	
 	initialize: function(){ // Initialize app
 
@@ -67,7 +67,7 @@ var theater = {
 	close: function(){
 
 		this.closeControls();
-		var video                     = $("#TheaterVideo")[0];
+		var video                     = $("#pe-theater-video")[0];
 		video.style.display           = "none";
 		video.innerHTML               = '<div id="YouTube" style="display:none;"></div>'; // Remove current YouTube video to prevent background bandwidth usage
 		this.shader.style.display     = "none";
