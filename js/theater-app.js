@@ -14,7 +14,7 @@ var theater = {
 	video:                         null,
 	controller:                    null,
 	
-	initialize: function(){ // Initialize app
+	initialize(){ // Initialize app
 
 		this.shader     = $("#pe-theater-shader")[0];
 		this.video      = $("#pe-theater-video")[0];
@@ -30,7 +30,7 @@ var theater = {
 
 	},
 	
-	open: function( selectedList ){
+	open( selectedList ){
 
 		this.videoList = selectedList;
 
@@ -68,7 +68,7 @@ var theater = {
 
 	},
 
-	close: function(){
+	close(){
 
 		this.closeControls();
 		var video                     = $("#pe-theater-video")[0];
@@ -80,7 +80,7 @@ var theater = {
 
 	},
 	
-	loadVideo: function( videoId ){
+	loadVideo( videoId ){
 
 		if( videoId != "" && videoId.length == 11 ){
 
@@ -114,7 +114,7 @@ var theater = {
 
 	},
 
-	openControls: function(){ // Opens YouTube video selection controls
+	openControls(){ // Opens YouTube video selection controls
 
 		// Show selected video list
 		$("#" + this.videoList)[0].style.display = "block";
@@ -124,14 +124,14 @@ var theater = {
 		
 	},
 	
-	closeControls: function(){
+	closeControls(){
 
 		// Hide selected video list
 		$("#" + this.videoList)[0].style.display = "none";
 
 	},
 	
-	setSize: function(){ // Called when viewer resizes browser window
+	setSize(){ // Called when viewer resizes browser window
 
 		// Check if app is open
 		if( this.active ){
