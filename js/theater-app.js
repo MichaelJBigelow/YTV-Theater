@@ -1,20 +1,20 @@
 var theater = {
 
-	revision:                      "3.14.2020.1",
-	url:                           window.location.href,
-	urlOrigin:                     window.location.origin,
-	queryString:                   window.location.search,
-	active:                        false, // Used to determine if the app is open or closed.
-	videoList:                     "", // Selected video list
-	userWidth:                     window.innerWidth,
-	videoWidth:                    0,
-	videoHeight:                   0,
-	videoOffset:                   0,
-	shader:                        null,
-	video:                         null,
-	controller:                    null,
-	
-	initialize(){ // Initialize app
+	revision:    "3.14.2020.1",
+	url:         window.location.href,
+	urlOrigin:   window.location.origin,
+	queryString: window.location.search,
+	active:      false, // Used to determine if the app is open or closed.
+	videoList:   "", // Selected video list
+	userWidth:   window.innerWidth,
+	videoWidth:  0,
+	videoHeight: 0,
+	videoOffset: 0,
+	shader:      null,
+	video:       null,
+	controller:  null,
+
+	initialize(){
 
 		this.shader     = $("#pe-theater-shader")[0];
 		this.video      = $("#pe-theater-video")[0];
@@ -29,7 +29,7 @@ var theater = {
 		}
 
 	},
-	
+
 	open( selectedList ){
 
 		this.videoList = selectedList;
@@ -51,14 +51,14 @@ var theater = {
 			return;
 
 		}
-		
+
 		// debug
 		//if(this.userWidth < 810){alert('Small Screen: Body width is ' + this.userWidth);}else{alert('Big Screen: Body width is ' + this.userWidth);}
-		
-		this.active                       = true;
-		this.shader.style.display         = "block";
-		this.video.style.display          = "block";
-		this.controller.style.display     = "block";
+
+		this.active                   = true;
+		this.shader.style.display     = "block";
+		this.video.style.display      = "block";
+		this.controller.style.display = "block";
 
 		this.openControls();
 
@@ -79,7 +79,7 @@ var theater = {
 		this.active                   = false;
 
 	},
-	
+
 	loadVideo( videoId ){
 
 		if( videoId != "" && videoId.length == 11 ){
@@ -121,16 +121,16 @@ var theater = {
 
 		// Scroll to the top of the window
 		window.scrollTo( 0, 0 );
-		
+
 	},
-	
+
 	closeControls(){
 
 		// Hide selected video list
 		$("#" + this.videoList)[0].style.display = "none";
 
 	},
-	
+
 	setSize(){ // Called when viewer resizes browser window
 
 		// Check if app is open
