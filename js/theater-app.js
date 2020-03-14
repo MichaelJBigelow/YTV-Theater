@@ -6,7 +6,7 @@ var theater = {
 	queryString: window.location.search,
 	active:      false, // Used to determine if the app is open or closed.
 	videoList:   "", // Selected video list
-	userWidth:   window.innerWidth,
+	userWidth:   0,
 	videoWidth:  0,
 	videoHeight: 0,
 	videoOffset: 0,
@@ -16,6 +16,7 @@ var theater = {
 
 	initialize(){
 
+		this.userWidth  = window.innerWidth;
 		this.shader     = $("#pe-theater-shader")[0];
 		this.video      = $("#pe-theater-video")[0];
 		this.controller = $("#pe-theater-controller")[0];
