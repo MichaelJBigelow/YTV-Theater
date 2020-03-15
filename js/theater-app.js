@@ -1,9 +1,6 @@
 var theater = {
 
 	revision:    "3.14.2020.1",
-	url:         window.location.href,
-	urlOrigin:   window.location.origin,
-	queryString: window.location.search,
 	active:      false, // Used to determine if the app is open or closed.
 	videoList:   "", // Selected video list
 	userWidth:   0,
