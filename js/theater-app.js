@@ -22,7 +22,7 @@ var theater = {
 
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
 
-			window.addEventListener( "resize", function(){ theater.setSize(); }, false );
+			window.addEventListener( "resize", () => { theater.setSize(); }, false );
 
 		}
 
@@ -34,14 +34,16 @@ var theater = {
 
 		if( typeof document.querySelector("#" + this.videoList) === "undefined" ){ // Check for valid video list
 
+			let errorMessage = '';
+
 			if( typeof selectedList === "undefined" || selectedList === "" ){
 
-				var errorMessage = "That is not a valid playlist name.";
+				errorMessage = "That is not a valid playlist name.";
 
 			}else{
 
-				var selectedVideoList = selectedList.replace( /_/g, " " );
-				var errorMessage      = "The " + selectedVideoList + " video playlist no longer exists.";
+				let selectedVideoList = selectedList.replace( /_/g, " " );
+				errorMessage          = "The " + selectedVideoList + " video playlist no longer exists.";
 
 			}
 
@@ -60,7 +62,7 @@ var theater = {
 
 		this.openControls();
 
-		var defaultVideoSelect = document.querySelector("#" + this.videoList).value;
+		let defaultVideoSelect = document.querySelector("#" + this.videoList).value;
 		defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
 		this.loadVideo( defaultVideoSelect );
 
@@ -69,7 +71,7 @@ var theater = {
 	close(){
 
 		this.closeControls();
-		var video                     = document.querySelector("#pe-theater-video");
+		let video                     = document.querySelector("#pe-theater-video");
 		video.style.display           = "none";
 		video.innerHTML               = '<div id="YouTube" style="display:none;"></div>'; // Remove current YouTube video to prevent background bandwidth usage
 		this.shader.style.display     = "none";
@@ -82,12 +84,12 @@ var theater = {
 
 		if( videoId != "" && videoId.length == 11 ){
 
-			var videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube" src="https://www.youtube.com/embed/';
-			var videoCode2       = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+			let videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube" src="https://www.youtube.com/embed/';
+			let videoCode2       = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 			this.video.innerHTML = videoCode1 + videoId + videoCode2;
 
 			// Custom Google Analytics tracking code
-			/*var pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoId;
+			/*let pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoId;
 
 			ga('send', {
 			  hitType: 'pageview',
@@ -96,8 +98,8 @@ var theater = {
 
 		}else{
 
-			var videoCode1       = 'Invalid video ID.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
-			var videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+			let videoCode1       = 'Invalid video ID.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
+			let videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 			this.video.innerHTML = videoCode1 + videoCode2;
 
 		}
@@ -136,7 +138,7 @@ var theater = {
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
 			this.videoHeight            = Math.round( this.videoWidth * .8235 ); // Calculates video height based on YouTube recommended aspect ratio
-			var youTubeVideo            = document.querySelector("#YouTube");
+			let youTubeVideo            = document.querySelector("#YouTube");
 			this.video.style.width      = this.videoWidth + "px";
 			this.video.style.height     = this.videoHeight + "px";
 			youTubeVideo.style.width    = this.videoWidth + "px";
