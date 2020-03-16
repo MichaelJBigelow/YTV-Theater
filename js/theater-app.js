@@ -14,9 +14,9 @@ var theater = {
 	initialize(){
 
 		this.userWidth  = window.innerWidth;
-		this.shader     = $("#pe-theater-shader")[0];
-		this.video      = $("#pe-theater-video")[0];
-		this.controller = $("#pe-theater-controller")[0];
+		this.shader     = document.querySelector("#pe-theater-shader");
+		this.video      = document.querySelector("#pe-theater-video");
+		this.controller = document.querySelector("#pe-theater-controller");
 
 		this.setSize();
 
@@ -32,7 +32,7 @@ var theater = {
 
 		this.videoList = selectedList;
 
-		if( typeof $("#" + this.videoList)[0] === "undefined" ){ // Check for valid video list
+		if( typeof document.querySelector("#" + this.videoList) === "undefined" ){ // Check for valid video list
 
 			if( typeof selectedList === "undefined" || selectedList === "" ){
 
@@ -60,7 +60,7 @@ var theater = {
 
 		this.openControls();
 
-		var defaultVideoSelect = $("#" + this.videoList)[0].value;
+		var defaultVideoSelect = document.querySelector("#" + this.videoList).value;
 		defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
 		this.loadVideo( defaultVideoSelect );
 
@@ -69,7 +69,7 @@ var theater = {
 	close(){
 
 		this.closeControls();
-		var video                     = $("#pe-theater-video")[0];
+		var video                     = document.querySelector("#pe-theater-video");
 		video.style.display           = "none";
 		video.innerHTML               = '<div id="YouTube" style="display:none;"></div>'; // Remove current YouTube video to prevent background bandwidth usage
 		this.shader.style.display     = "none";
@@ -109,7 +109,7 @@ var theater = {
 	openControls(){ // Opens YouTube video selection controls
 
 		// Show selected video list
-		$("#" + this.videoList)[0].style.display = "block";
+		document.querySelector("#" + this.videoList).style.display = "block";
 
 		// Scroll to the top of the window
 		window.scrollTo( 0, 0 );
@@ -119,7 +119,7 @@ var theater = {
 	closeControls(){
 
 		// Hide selected video list
-		$("#" + this.videoList)[0].style.display = "none";
+		document.querySelector("#" + this.videoList).style.display = "none";
 
 	},
 
@@ -136,7 +136,7 @@ var theater = {
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
 			this.videoHeight            = Math.round( this.videoWidth * .8235 ); // Calculates video height based on YouTube recommended aspect ratio
-			var youTubeVideo            = $("#YouTube")[0];
+			var youTubeVideo            = document.querySelector("#YouTube");
 			this.video.style.width      = this.videoWidth + "px";
 			this.video.style.height     = this.videoHeight + "px";
 			youTubeVideo.style.width    = this.videoWidth + "px";
