@@ -32,7 +32,7 @@ var theater = {
 
 		this.videoList = selectedList;
 
-		if( typeof document.querySelector("#" + this.videoList) === "undefined" ){ // Check for valid video list
+		if( document.querySelector("#" + this.videoList) === null ){ // Check for valid video list
 
 			let errorMessage = '';
 
@@ -43,7 +43,7 @@ var theater = {
 			}else{
 
 				let selectedVideoList = selectedList.replace( /_/g, " " );
-				errorMessage          = "The " + selectedVideoList + " video playlist no longer exists.";
+				errorMessage          = "The " + selectedVideoList + " playlist could not be found.";
 
 			}
 
