@@ -94,15 +94,9 @@ var theater = {
 			  page: pageValue
 			});*/
 
-		}else if( videoId.length != 11 && videoId != "" ){
-
-			var videoCode1       = 'Video ID is invalid.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
-			var videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-			this.video.innerHTML = videoCode1 + videoCode2;
-
 		}else{
 
-			var videoCode1       = 'Video is not available.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
+			var videoCode1       = 'Invalid video ID.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
 			var videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 			this.video.innerHTML = videoCode1 + videoCode2;
 
