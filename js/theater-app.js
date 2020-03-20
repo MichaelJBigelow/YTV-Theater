@@ -3,7 +3,6 @@ var theater = {
 	revision:    "3.14.2020.1",
 	active:      false, // Used to determine if the app is open or closed.
 	videoList:   "", // Selected video list
-	userWidth:   0,
 	videoWidth:  0,
 	videoHeight: 0,
 	videoOffset: 0,
@@ -13,7 +12,6 @@ var theater = {
 
 	initialize(){
 
-		this.userWidth  = window.innerWidth;
 		this.shader     = document.querySelector("#pe-theater-shader");
 		this.video      = document.querySelector("#pe-theater-video");
 		this.controller = document.querySelector("#pe-theater-controller");
@@ -52,9 +50,6 @@ var theater = {
 
 		}
 
-		// debug
-		//if(this.userWidth < 810){alert('Small Screen: Body width is ' + this.userWidth);}else{alert('Big Screen: Body width is ' + this.userWidth);}
-
 		this.active                   = true;
 		this.shader.style.display     = "block";
 		this.video.style.display      = "block";
@@ -73,7 +68,7 @@ var theater = {
 		this.closeControls();
 		let video                     = document.querySelector("#pe-theater-video");
 		video.style.display           = "none";
-		video.innerHTML               = '<div id="YouTube" style="display:none;"></div>'; // Remove current YouTube video to prevent background bandwidth usage
+		video.innerHTML               = ""; // Remove current YouTube video to prevent background bandwidth usage
 		this.shader.style.display     = "none";
 		this.controller.style.display = "none";
 		this.active                   = false;
@@ -130,10 +125,10 @@ var theater = {
 		// Check if app is open
 		if( this.active ){
 
-			this.userWidth = window.innerWidth;
+			let userWidth = window.innerWidth;
 
 			// Calculates video container width based on 75% of viewable area in browser
-			this.videoWidth = Math.round( this.userWidth * .75 );
+			this.videoWidth = Math.round( userWidth * .75 );
 
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
