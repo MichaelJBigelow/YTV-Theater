@@ -1,4 +1,4 @@
-var theater = {
+const theater = {
 
 	revision:    "3.20.2020.1",
 	active:      false, // Used to determine if the app is open or closed.
