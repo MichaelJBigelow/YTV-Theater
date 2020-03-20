@@ -16,8 +16,6 @@ const theater = {
 		this.video      = document.querySelector( "#pe-theater-video" );
 		this.controller = document.querySelector( "#pe-theater-controller" );
 
-		this.setSize();
-
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
 
 			window.addEventListener( "resize", () => { theater.setSize(); }, false );
