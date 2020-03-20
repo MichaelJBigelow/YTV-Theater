@@ -1,6 +1,6 @@
 var theater = {
 
-	revision:    "3.14.2020.1",
+	revision:    "3.20.2020.1",
 	active:      false, // Used to determine if the app is open or closed.
 	videoList:   "", // Selected video list
 	videoWidth:  0,
@@ -12,9 +12,9 @@ var theater = {
 
 	initialize(){
 
-		this.shader     = document.querySelector("#pe-theater-shader");
-		this.video      = document.querySelector("#pe-theater-video");
-		this.controller = document.querySelector("#pe-theater-controller");
+		this.shader     = document.querySelector( "#pe-theater-shader" );
+		this.video      = document.querySelector( "#pe-theater-video" );
+		this.controller = document.querySelector( "#pe-theater-controller" );
 
 		this.setSize();
 
@@ -30,7 +30,7 @@ var theater = {
 
 		this.videoList = selectedList;
 
-		if( document.querySelector("#" + this.videoList) === null ){ // Check for valid video list
+		if( document.querySelector( "#" + this.videoList ) === null ){ // Check for valid video list
 
 			let errorMessage = '';
 
@@ -57,7 +57,7 @@ var theater = {
 
 		this.openControls();
 
-		let defaultVideoSelect = document.querySelector("#" + this.videoList).value;
+		let defaultVideoSelect = document.querySelector( "#" + this.videoList ).value;
 		defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
 		this.loadVideo( defaultVideoSelect );
 
@@ -66,7 +66,7 @@ var theater = {
 	close(){
 
 		this.closeControls();
-		let video                     = document.querySelector("#pe-theater-video");
+		let video                     = document.querySelector( "#pe-theater-video" );
 		video.style.display           = "none";
 		video.innerHTML               = ""; // Remove current YouTube video to prevent background bandwidth usage
 		this.shader.style.display     = "none";
@@ -79,7 +79,7 @@ var theater = {
 
 		if( videoId != "" && videoId.length == 11 ){
 
-			let videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube" src="https://www.youtube.com/embed/';
+			let videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="youtube" src="https://www.youtube.com/embed/';
 			let videoCode2       = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 			this.video.innerHTML = videoCode1 + videoId + videoCode2;
 
@@ -93,7 +93,7 @@ var theater = {
 
 		}else{
 
-			let videoCode1       = 'Invalid video ID.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="YouTube"';
+			let videoCode1       = 'Invalid video ID.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="youtube"';
 			let videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 			this.video.innerHTML = videoCode1 + videoCode2;
 
@@ -106,7 +106,7 @@ var theater = {
 	openControls(){ // Opens YouTube video selection controls
 
 		// Show selected video list
-		document.querySelector("#" + this.videoList).style.display = "block";
+		document.querySelector( "#" + this.videoList ).style.display = "block";
 
 		// Scroll to the top of the window
 		window.scrollTo( 0, 0 );
@@ -116,7 +116,7 @@ var theater = {
 	closeControls(){
 
 		// Hide selected video list
-		document.querySelector("#" + this.videoList).style.display = "none";
+		document.querySelector( "#" + this.videoList ).style.display = "none";
 
 	},
 
@@ -133,7 +133,7 @@ var theater = {
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
 			this.videoHeight            = Math.round( this.videoWidth * .8235 ); // Calculates video height based on YouTube recommended aspect ratio
-			let youTubeVideo            = document.querySelector("#YouTube");
+			let youTubeVideo            = document.querySelector( "#youtube" );
 			this.video.style.width      = this.videoWidth + "px";
 			this.video.style.height     = this.videoHeight + "px";
 			youTubeVideo.style.width    = this.videoWidth + "px";
