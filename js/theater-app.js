@@ -104,9 +104,6 @@ const theater = {
 		// Show selected video list
 		document.querySelector( "#" + this.videoList ).style.display = "block";
 
-		// Scroll to the top of the window
-		window.scrollTo( 0, 0 );
-
 	},
 
 	closeControls(){
