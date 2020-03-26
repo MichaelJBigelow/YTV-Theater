@@ -39,7 +39,9 @@
 
 	<!-- Procure Eminence Theater HTML Begins -->
 	<div id="pe-theater-shader" onclick="theater.close()"></div>
-	<div id="pe-theater-video"></div>
+	<div id="pe-theater-video-container">
+		<iframe id="youtube-video" frameborder="0" allowfullscreen></iframe>
+	</div>
 	<div id="pe-theater-controller">
 		<select class="pe-theater-video-selector" id="Github_Tutorials" onchange="theater.loadVideo(this.value)">
 			<option selected="selected" value="0fKg7e37bQE">Basics For Mac or Windows</option>

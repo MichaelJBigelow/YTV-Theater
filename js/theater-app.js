@@ -1,20 +1,22 @@
 const theater = {
 
-	revision:    "3.20.2020.1",
-	active:      false, // Used to determine if the app is open or closed.
-	videoList:   "", // Selected video list
-	videoWidth:  0,
-	videoHeight: 0,
-	videoOffset: 0,
-	shader:      null,
-	video:       null,
-	controller:  null,
+	revision:       "3.25.2020.1",
+	active:         false, // Used to determine if the app is open or closed.
+	videoList:      "", // Selected video list
+	videoWidth:     0,
+	videoHeight:    0,
+	videoOffset:    0,
+	shader:         null,
+	videoContainer: null,
+	video:          null,
+	controller:     null,
 
 	initialize(){
 
-		this.shader     = document.querySelector( "#pe-theater-shader" );
-		this.video      = document.querySelector( "#pe-theater-video" );
-		this.controller = document.querySelector( "#pe-theater-controller" );
+		this.shader         = document.querySelector( "#pe-theater-shader" );
+		this.videoContainer = document.querySelector( "#pe-theater-video-container" );
+		this.video          = document.querySelector( "#youtube-video" );
+		this.controller     = document.querySelector( "#pe-theater-controller" );
 
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
 
@@ -48,10 +50,10 @@ const theater = {
 
 		}
 
-		this.active                   = true;
-		this.shader.style.display     = "block";
-		this.video.style.display      = "block";
-		this.controller.style.display = "block";
+		this.active                       = true;
+		this.shader.style.display         = "block";
+		this.videoContainer.style.display = "block";
+		this.controller.style.display     = "block";
 
 		this.openControls();
 
@@ -64,12 +66,11 @@ const theater = {
 	close(){
 
 		this.closeControls();
-		let video                     = document.querySelector( "#pe-theater-video" );
-		video.style.display           = "none";
-		video.innerHTML               = ""; // Remove current YouTube video to prevent background bandwidth usage
-		this.shader.style.display     = "none";
-		this.controller.style.display = "none";
-		this.active                   = false;
+
+		this.videoContainer.style.display = "none";
+		this.shader.style.display         = "none";
+		this.controller.style.display     = "none";
+		this.active                       = false;
 
 	},
 
@@ -77,9 +78,7 @@ const theater = {
 
 		if( videoId != "" && videoId.length == 11 ){
 
-			let videoCode1       = '<iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="youtube" src="https://www.youtube.com/embed/';
-			let videoCode2       = '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-			this.video.innerHTML = videoCode1 + videoId + videoCode2;
+			this.video.src = `https://www.youtube.com/embed/${videoId}`;
 
 			// Custom Google Analytics tracking code
 			/*let pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoId;
@@ -91,9 +90,8 @@ const theater = {
 
 		}else{
 
-			let videoCode1       = 'Invalid video ID.<br/><iframe width="' + this.videoWidth + '" height="' + this.videoHeight + '" id="youtube"';
-			let videoCode2       = ' frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-			this.video.innerHTML = videoCode1 + videoCode2;
+			this.video.src = ""; // Unload previous video
+			alert( 'Invalid video ID.' );
 
 		}
 
@@ -130,15 +128,14 @@ const theater = {
 
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
-			this.videoHeight            = Math.round( this.videoWidth * .8235 ); // Calculates video height based on YouTube recommended aspect ratio
-			let youTubeVideo            = document.querySelector( "#youtube" );
-			this.video.style.width      = this.videoWidth + "px";
-			this.video.style.height     = this.videoHeight + "px";
-			youTubeVideo.style.width    = this.videoWidth + "px";
-			youTubeVideo.style.height   = this.videoHeight + "px";
-			this.videoOffset            = Math.round( this.videoWidth / 2 ); // Calculate videoContainer center position
-			this.videoOffset           += ( ( this.video.offsetWidth - youTubeVideo.offsetWidth ) / 2 ); // Compensate for padding on "video" div
-			this.video.style.marginLeft = "-" + this.videoOffset + "px"; // Apply new center location to the video container DIV
+			this.videoHeight                     = Math.round( this.videoWidth * .8235 ); // Calculates video height based on YouTube recommended aspect ratio
+			this.videoContainer.style.width      = this.videoWidth + "px";
+			this.videoContainer.style.height     = this.videoHeight + "px";
+			this.video.style.width               = this.videoWidth + "px";
+			this.video.style.height              = this.videoHeight + "px";
+			this.videoOffset                     = Math.round( this.videoWidth / 2 ); // Calculate videoContainer center position
+			this.videoOffset                     += ( ( this.video.offsetWidth - this.video.offsetWidth ) / 2 ); // Compensate for padding on "video" div
+			this.videoContainer.style.marginLeft = "-" + this.videoOffset + "px"; // Apply new center location to the video container DIV
 
 		}
 
