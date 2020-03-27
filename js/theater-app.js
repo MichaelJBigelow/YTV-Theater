@@ -15,7 +15,7 @@ const theater = {
 
 		this.shader         = document.querySelector( "#pe-theater-shader" );
 		this.videoContainer = document.querySelector( "#pe-theater-video-container" );
-		this.video          = document.querySelector( "#youtube-video" );
+		this.video          = document.querySelector( "#pe-theater-youtube-video" );
 		this.controller     = document.querySelector( "#pe-theater-controller" );
 
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
