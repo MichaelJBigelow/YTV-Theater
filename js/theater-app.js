@@ -41,7 +41,7 @@ const theater = {
 			}else{
 
 				let selectedVideoList = selectedList.replace( /_/g, " " );
-				errorMessage          = "The " + selectedVideoList + " playlist could not be found.";
+				errorMessage          = `The ${selectedVideoList} playlist could not be found.`;
 
 			}
 
