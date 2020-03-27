@@ -1,7 +1,7 @@
 const theater = {
 
-	revision:       "3.25.2020.1",
-	active:         false, // Used to determine if the app is open or closed.
+	revision:       "3.27.2020.1",
+	active:         false, // Used to determine if the app is open or closed
 	videoList:      "", // Selected video list
 	videoWidth:     0,
 	videoHeight:    0,
@@ -118,10 +118,43 @@ const theater = {
 		// Check if app is open
 		if( this.active ){
 
-			let userWidth = window.innerWidth;
+			let viewHeight       = this.shader.clientHeight; // Window height minus scrollbar
+			let viewWidth        = this.shader.clientWidth; // Window width minus scrollbar
+			let videoHeight      = 0;
+			let videoWidth       = 0;
+			let controllerHeight = this.controller.offsetHeight;
+			let videoTopPos      = controllerHeight + 20;
 
+			if( viewHeight > viewWidth ){
+
+				videoHeight = Math.round( ( viewHeight - videoTopPos ) * 0.9 );
+				videoWidth  = Math.round( viewWidth * 0.9 );
+
+			}else{
+
+				videoHeight = Math.round( ( viewHeight - videoTopPos ) * 0.9 );
+				videoWidth  = Math.round( viewWidth * 0.9 );
+
+			}
+
+			// Set video container size
+			this.videoContainer.style.height = `${videoHeight}px`;
+			this.videoContainer.style.width  = `${videoWidth}px`;
+
+			// Set video container position
+			let videoLeftMarginPos               = Math.round( videoWidth / 2 );
+			this.videoContainer.style.top        = `${videoTopPos}px`;
+			this.videoContainer.style.marginLeft = `-${videoLeftMarginPos}px`;
+
+			// Debug
+			console.log( `videoHeight        = ${videoHeight}` );
+			console.log( `videoWidth         = ${videoWidth}` );
+			console.log( `videoTopPos        = ${videoTopPos}` );
+			console.log( `videoLeftMarginPos = -${videoLeftMarginPos}` );
+
+			/*
 			// Calculates video container width based on 75% of viewable area in browser
-			this.videoWidth = Math.round( userWidth * .75 );
+			this.videoWidth = Math.round( viewWidth * .75 );
 
 			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
 
@@ -131,6 +164,7 @@ const theater = {
 			this.videoOffset                     = Math.round( this.videoWidth / 2 ); // Calculate videoContainer center position
 			this.videoOffset                     += ( ( this.video.offsetWidth - this.video.offsetWidth ) / 2 ); // Compensate for padding on "video" div
 			this.videoContainer.style.marginLeft = "-" + this.videoOffset + "px"; // Apply new center location to the video container DIV
+			*/
 
 		}
 
