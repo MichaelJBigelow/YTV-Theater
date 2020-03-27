@@ -81,7 +81,7 @@ const theater = {
 			this.video.src = `https://www.youtube.com/embed/${videoId}`;
 
 			// Custom Google Analytics tracking code
-			/*let pageValue = '/YouTubeTheaterApp/Playlist=' + this.videoList + '&CurrentVideo=' + videoId;
+			/*let pageValue = '/pe-theater-app/playlist=' + this.videoList + '&currentVideo=' + videoId;
 
 			ga('send', {
 			  hitType: 'pageview',
