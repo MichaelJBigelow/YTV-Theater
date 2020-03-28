@@ -154,10 +154,14 @@ const theater = {
 			this.videoContainer.style.width  = `${videoWidth}px`;
 
 			// Set video container position
-			let videoLeftMarginPos               = Math.round( videoWidth / 2 );
+			let videoLeftMargin                  = videoWidth / 2;
 			let videoTopPos                      = ( viewHeight - videoHeight ) / 2;
-			this.videoContainer.style.marginLeft = `-${videoLeftMarginPos}px`;
+			this.videoContainer.style.marginLeft = `-${videoLeftMargin}px`;
 			this.videoContainer.style.top        = `${videoTopPos}px`;
+
+			// Set controller position
+			let controllerLeftMargin = this.controller.offsetWidth / 2;
+			this.controller.style.marginLeft = `-${controllerLeftMargin}px`;
 
 		}
 
