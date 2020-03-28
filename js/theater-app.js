@@ -118,22 +118,34 @@ const theater = {
 		// Check if app is open
 		if( this.active ){
 
-			let viewHeight       = this.shader.clientHeight; // Window height minus scrollbar
-			let viewWidth        = this.shader.clientWidth; // Window width minus scrollbar
+			let viewHeight       = this.shader.clientHeight;
+			let viewWidth        = this.shader.clientWidth;
+			let availableHeight  = Math.round( viewHeight * 0.95 ); // Window height minus scrollbar
+			let availableWidth   = Math.round( viewWidth * 0.95 ); // Window width minus scrollbar
 			let videoHeight      = 0;
 			let videoWidth       = 0;
-			let controllerHeight = this.controller.offsetHeight;
-			let videoTopPos      = controllerHeight + 20;
+			let aspectRatio      = 0.5625; // YouTube recommended aspect ratio of 16:9
 
-			if( viewHeight > viewWidth ){
+			if( availableHeight > availableWidth ){ // Portrait
 
-				videoHeight = Math.round( ( viewHeight - videoTopPos ) * 0.9 );
-				videoWidth  = Math.round( viewWidth * 0.9 );
+				videoWidth  = Math.round( availableWidth ); // Calculate width first
+				videoHeight = Math.round( availableWidth * aspectRatio ); // Apply 16:9 ratio
 
-			}else{
+			}else{ // Landscape
 
-				videoHeight = Math.round( ( viewHeight - videoTopPos ) * 0.9 );
-				videoWidth  = Math.round( viewWidth * 0.9 );
+				let viewAspectRatio = availableHeight / availableWidth;
+
+				if( viewAspectRatio > aspectRatio ){
+
+					videoWidth  = Math.round( availableWidth ); // Calculate width first
+					videoHeight = Math.round( availableWidth * aspectRatio ); // Apply 16:9 ratio
+
+				}else{
+
+					videoHeight = Math.round( availableHeight );
+					videoWidth  = Math.round( videoHeight / aspectRatio );
+
+				}
 
 			}
 
@@ -143,28 +155,9 @@ const theater = {
 
 			// Set video container position
 			let videoLeftMarginPos               = Math.round( videoWidth / 2 );
-			this.videoContainer.style.top        = `${videoTopPos}px`;
+			let videoTopPos                      = ( viewHeight - videoHeight ) / 2;
 			this.videoContainer.style.marginLeft = `-${videoLeftMarginPos}px`;
-
-			// Debug
-			console.log( `videoHeight        = ${videoHeight}` );
-			console.log( `videoWidth         = ${videoWidth}` );
-			console.log( `videoTopPos        = ${videoTopPos}` );
-			console.log( `videoLeftMarginPos = -${videoLeftMarginPos}` );
-
-			/*
-			// Calculates video container width based on 75% of viewable area in browser
-			this.videoWidth = Math.round( viewWidth * .75 );
-
-			if( this.videoWidth < 250 ){ this.videoWidth = 250; } // Ensures video width and height are within YouTube required specifications
-
-			this.videoHeight                     = Math.round( this.videoWidth * .8235 ); // Calculates video height based on YouTube recommended aspect ratio
-			this.videoContainer.style.width      = this.videoWidth + "px";
-			this.videoContainer.style.height     = this.videoHeight + "px";
-			this.videoOffset                     = Math.round( this.videoWidth / 2 ); // Calculate videoContainer center position
-			this.videoOffset                     += ( ( this.video.offsetWidth - this.video.offsetWidth ) / 2 ); // Compensate for padding on "video" div
-			this.videoContainer.style.marginLeft = "-" + this.videoOffset + "px"; // Apply new center location to the video container DIV
-			*/
+			this.videoContainer.style.top        = `${videoTopPos}px`;
 
 		}
 
