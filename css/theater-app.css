@@ -29,10 +29,10 @@
 	display: none;
 	position: fixed;
 	box-sizing: border-box;
-	height: 34px;
-	width: 300px;
+	max-width: 90%;
 	top: 0;
 	left: 50%;
+	padding: 14px;
 	border-color: #DDDDDD;
 	border-width: 0px 2px 2px 2px;
 	border-style: solid;
@@ -46,7 +46,6 @@
 .pe-theater-video-selector{
 	display: none;
 	position: relative;
-	width: 275px;
-	margin: auto;
+	max-width: 100%;
 	font: 16px/100% Times New Roman;
 }
