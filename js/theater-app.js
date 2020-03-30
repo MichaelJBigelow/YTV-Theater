@@ -1,22 +1,26 @@
 const theater = {
 
-	revision:       "3.27.2020.1",
-	active:         false, // Used to determine if the app is open or closed
-	videoList:      "", // Selected video list
-	videoWidth:     0,
-	videoHeight:    0,
-	videoOffset:    0,
-	shader:         null,
-	videoContainer: null,
-	video:          null,
-	controller:     null,
+	revision:         "3.29.2020.1",
+	active:           false, // Used to determine if the app is open or closed
+	controlMaximized: true,
+	videoWidth:       0,
+	videoHeight:      0,
+	videoOffset:      0,
+	playlistTitle:    "", // Selected playlist title
+	shader:           null,
+	playlist:         null,
+	videoContainer:   null,
+	video:            null,
+	controller:       null,
+	controllerButton: null,
 
 	initialize(){
 
-		this.shader         = document.querySelector( "#pe-theater-shader" );
-		this.videoContainer = document.querySelector( "#pe-theater-video-container" );
-		this.video          = document.querySelector( "#pe-theater-youtube-video" );
-		this.controller     = document.querySelector( "#pe-theater-controller" );
+		this.shader           = document.querySelector( "#pe-theater-shader" );
+		this.videoContainer   = document.querySelector( "#pe-theater-video-container" );
+		this.video            = document.querySelector( "#pe-theater-youtube-video" );
+		this.controller       = document.querySelector( "#pe-theater-controller" );
+		this.controllerButton = document.querySelector( "#pe-theater-controller-button" );
 
 		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
 
@@ -28,9 +32,10 @@ const theater = {
 
 	open( selectedList ){
 
-		this.videoList = selectedList;
+		this.playlistTitle    = selectedList;
+		this.playlist         = document.querySelector( "#" + this.playlistTitle );
 
-		if( document.querySelector( "#" + this.videoList ) === null ){ // Check for valid video list
+		if( this.playlist === null ){ // Check for valid video list
 
 			let errorMessage = '';
 
@@ -50,14 +55,15 @@ const theater = {
 
 		}
 
-		this.active                       = true;
-		this.shader.style.display         = "block";
-		this.videoContainer.style.display = "block";
-		this.controller.style.display     = "block";
+		this.active                         = true;
+		this.shader.style.display           = "block";
+		this.videoContainer.style.display   = "block";
+		this.controller.style.display       = "block";
+		this.controllerButton.style.display = "block";
+		this.playlist.style.display         = "block"; // Show selected video list
+		this.maximizeControls();
 
-		this.openControls();
-
-		let defaultVideoSelect = document.querySelector( "#" + this.videoList ).value;
+		let defaultVideoSelect = this.playlist.value;
 		defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
 		this.loadVideo( defaultVideoSelect );
 
@@ -65,12 +71,12 @@ const theater = {
 
 	close(){
 
-		this.closeControls();
-
-		this.videoContainer.style.display = "none";
-		this.shader.style.display         = "none";
-		this.controller.style.display     = "none";
-		this.active                       = false;
+		this.videoContainer.style.display   = "none";
+		this.shader.style.display           = "none";
+		this.controller.style.display       = "none";
+		this.controllerButton.style.display = "none";
+		this.playlist.style.display         = "none"; // Hide selected video list
+		this.active                         = false;
 
 	},
 
@@ -99,17 +105,35 @@ const theater = {
 
 	},
 
-	openControls(){ // Opens YouTube video selection controls
+	toggleControlView(){
 
-		// Show selected video list
-		document.querySelector( "#" + this.videoList ).style.display = "block";
+		if( this.controlMaximized === false ){
+
+			this.maximizeControls();
+
+		}else{
+
+			this.minimizeControls();
+
+		}
 
 	},
 
-	closeControls(){
+	maximizeControls(){
 
-		// Hide selected video list
-		document.querySelector( "#" + this.videoList ).style.display = "none";
+		this.controlMaximized           = true;
+		this.controller.style.top       = '0px';
+		this.controllerButton.style.top = `${this.controller.offsetHeight}px`;
+		this.controllerButton.innerHTML = '-';
+
+	},
+
+	minimizeControls(){
+
+		this.controlMaximized           = false;
+		this.controller.style.top       = `-${this.controller.offsetHeight}px`;
+		this.controllerButton.style.top = '0px';
+		this.controllerButton.innerHTML = '+';
 
 	},
 
@@ -162,6 +186,10 @@ const theater = {
 			// Set controller position
 			let controllerLeftMargin = this.controller.offsetWidth / 2;
 			this.controller.style.marginLeft = `-${controllerLeftMargin}px`;
+
+			// Set controller button position
+			let controllerBtnLeftMargin = this.controllerButton.offsetWidth / 2;
+			this.controllerButton.style.marginLeft = `-${controllerBtnLeftMargin}px`;
 
 		}
 

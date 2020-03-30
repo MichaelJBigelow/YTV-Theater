@@ -37,7 +37,6 @@
 	border-width: 0px 2px 2px 2px;
 	border-style: solid;
 	border-radius: 0px 0px 5px 5px;
-	margin-left: -150px;
 	background-color: rgba( 34, 34, 34, 0.8 );
 	overflow-x: hidden;
 	z-index: 100002;
@@ -47,6 +46,28 @@
 	display: none;
 	position: relative;
 	max-width: 100%;
-	font: 16px/100% Times New Roman;
+	padding: 6px;
+	font: 16px/100% Arial, Helvetica, sans-serif;
 	cursor: pointer;
+}
+
+#pe-theater-controller-button{
+	display: none;
+	position: fixed;
+	box-sizing: border-box;
+	top: 0;
+	left: 50%;
+	height: 20px;
+	width: 50px;
+	font-size: 16px;
+	line-height: 16px;
+	text-align: center;
+	color: #fff;
+	border-color: #fff;
+	border-style: solid;
+	border-width: 0px 2px 2px 2px;
+	border-radius: 0px 0px 5px 5px;
+	background-color: rgba( 34, 34, 34, 0.8 );
+	cursor: pointer;
+	z-index: 100002;
 }
