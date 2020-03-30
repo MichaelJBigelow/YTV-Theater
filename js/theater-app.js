@@ -121,19 +121,21 @@ const theater = {
 
 	maximizeControls(){
 
-		this.controlMaximized           = true;
-		this.controller.style.top       = '0px';
-		this.controllerButton.style.top = `${this.controller.offsetHeight}px`;
-		this.controllerButton.innerHTML = '-';
+		this.controlMaximized               = true;
+		this.controller.style.top           = '0px';
+		this.controllerButton.style.top     = `${this.controller.offsetHeight}px`;
+		this.controllerButton.style.opacity = '1';
+		this.controllerButton.innerHTML     = '-';
 
 	},
 
 	minimizeControls(){
 
-		this.controlMaximized           = false;
-		this.controller.style.top       = `-${this.controller.offsetHeight}px`;
-		this.controllerButton.style.top = '0px';
-		this.controllerButton.innerHTML = '+';
+		this.controlMaximized               = false;
+		this.controller.style.top           = `-${this.controller.offsetHeight}px`;
+		this.controllerButton.style.top     = '0px';
+		this.controllerButton.style.opacity = '0.4';
+		this.controllerButton.innerHTML     = '+';
 
 	},
 
