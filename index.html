@@ -11,19 +11,30 @@
 	<!-- Demo Page Styles -->
 	<style>
 		button{
-			display:inline-block;
-			width:260px;
-			height:60px;
-			background-color:#0200b6;
-			color:white;
-			font-weight:bold;
-			font-size:24px;
-			line-height:60px;
-			cursor:pointer;
+			display: inline-block;
+			box-sizing: border-box;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 3px 1px -2px rgba( 0, 0, 0, 0.2 ), 0 2px 2px 0 rgba( 0, 0, 0, 0.14 ), 0 1px 5px 0 rgba( 0, 0, 0, 0.12 );
+			outline: none;
+			width: 260px;
+			height: 60px;
+			margin: 20px 0 20px 0;
+			background-color :#3390e4;
+			color: white;
+			font-weight: bold;
+			font-size: 24px;
+			line-height: 60px;
+			cursor: pointer;
 		}
 		#button-container{
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
 			width: 100%;
-			height: 110px;
+			height: 100%;
 			text-align: center;
 		}
 	</style>
@@ -32,9 +43,9 @@
 <body onload="theater.initialize()">
 
 	<div id="button-container">
-		<button onclick="theater.open('Github_Tutorials')">Github Theater</button>
+		<button onclick="theater.open('Github_Tutorials')">Github Playlist</button>
 		<br><br>
-		<button onclick="theater.open('jQuery_Intro_Tutorials')">jQuery Theater</button>
+		<button onclick="theater.open('jQuery_Intro_Tutorials')">jQuery Playlist</button>
 	</div>
 
 	<!-- Procure Eminence Theater HTML Begins -->
