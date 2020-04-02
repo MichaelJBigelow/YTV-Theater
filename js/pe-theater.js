@@ -1,7 +1,7 @@
 const theater = {
 
 	revision:         "3.29.2020.1",
-	active:           false, // Used to determine if the app is open or closed
+	active:           false, // Used to determine if the theater is open or closed
 	controlMaximized: true,
 	videoWidth:       0,
 	videoHeight:      0,
@@ -87,7 +87,7 @@ const theater = {
 			this.video.src = `https://www.youtube.com/embed/${videoId}`;
 
 			// Custom Google Analytics tracking code
-			/*let pageValue = '/pe-theater-app/playlist=' + this.videoList + '&currentVideo=' + videoId;
+			/*let pageValue = '/pe-theater/playlist=' + this.videoList + '&currentVideo=' + videoId;
 
 			ga('send', {
 			  hitType: 'pageview',
@@ -141,7 +141,7 @@ const theater = {
 
 	setSize(){ // Called when viewer resizes browser window
 
-		// Check if app is open
+		// Check if the theater is open
 		if( this.active ){
 
 			let viewHeight       = this.shader.clientHeight;
