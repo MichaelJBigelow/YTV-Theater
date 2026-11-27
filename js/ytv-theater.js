@@ -9,7 +9,7 @@
  */
 class YTVTheater {
 
-	static revision = "11.27.2026.1";
+	static revision = "11.27.2026.2";
 
 	static #videoIdPattern = /^[\w-]{11}$/; // YouTube video IDs are 11 URL-safe characters
 
@@ -63,7 +63,18 @@ class YTVTheater {
 
 		this.#elements = elements;
 
-		const { shader, controller, controllerButton } = elements;
+		const { shader, video, controller, controllerButton } = elements;
+
+		// YouTube refuses embeds that arrive without a Referer header ("Error 153: Video player
+		// configuration error"), so make sure the page's origin is always sent, whatever the
+		// host page's own referrer policy is.
+		video.referrerPolicy = "strict-origin-when-cross-origin";
+
+		if( location.protocol === "file:" ){
+
+			console.warn( "YTV Theater: YouTube embeds need a Referer header, which pages opened from file:// cannot send. Serve this page over http(s) or the player will show Error 153." );
+
+		}
 
 		shader.addEventListener( "click", () => this.close() );
 		controllerButton.addEventListener( "click", () => this.toggleControlView() );
