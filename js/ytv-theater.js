@@ -45,11 +45,11 @@ class YTVTheater {
 		}
 
 		const elements = {
-			shader:           document.getElementById( "pe-theater-shader" ),
-			videoContainer:   document.getElementById( "pe-theater-video-container" ),
-			video:            document.getElementById( "pe-theater-youtube-video" ),
-			controller:       document.getElementById( "pe-theater-controller" ),
-			controllerButton: document.getElementById( "pe-theater-controller-button" ),
+			shader:           document.getElementById( "ytv-theater-shader" ),
+			videoContainer:   document.getElementById( "ytv-theater-video-container" ),
+			video:            document.getElementById( "ytv-theater-youtube-video" ),
+			controller:       document.getElementById( "ytv-theater-controller" ),
+			controllerButton: document.getElementById( "ytv-theater-controller-button" ),
 		};
 
 		const missing = Object.entries( elements ).filter( ( [ , element ] ) => element === null );
@@ -102,7 +102,7 @@ class YTVTheater {
 
 		controller.addEventListener( "change", ( event ) => {
 
-			if( event.target.matches( ".pe-theater-video-selector" ) ){
+			if( event.target.matches( ".ytv-theater-video-selector" ) ){
 
 				this.loadVideo( event.target.value );
 
@@ -140,7 +140,7 @@ class YTVTheater {
 
 		const playlist = playlistName ? document.getElementById( playlistName ) : null;
 
-		if( !playlist?.classList.contains( "pe-theater-video-selector" ) ){
+		if( !playlist?.classList.contains( "ytv-theater-video-selector" ) ){
 
 			alert( playlistName
 				? `The ${playlistName.replaceAll( "_", " " )} playlist could not be found.`
@@ -154,7 +154,7 @@ class YTVTheater {
 		this.#playlist.classList.add( "is-selected" );
 
 		this.#active = true;
-		document.documentElement.classList.add( "pe-theater-active" );
+		document.documentElement.classList.add( "ytv-theater-active" );
 		this.maximizeControls();
 
 		this.loadVideo( playlist.value );
@@ -169,7 +169,7 @@ class YTVTheater {
 
 		}
 
-		document.documentElement.classList.remove( "pe-theater-active" );
+		document.documentElement.classList.remove( "ytv-theater-active" );
 		this.#playlist?.classList.remove( "is-selected" );
 		this.#elements.video.src = "about:blank"; // Stop playback instead of leaving it running hidden
 		this.#active             = false;
@@ -254,7 +254,7 @@ class YTVTheater {
 	#syncControllerButton(){
 
 		const { controller, controllerButton } = this.#elements;
-		controllerButton.style.setProperty( "--pe-theater-controller-height", `${controller.offsetHeight}px` );
+		controllerButton.style.setProperty( "--ytv-theater-controller-height", `${controller.offsetHeight}px` );
 
 	}
 

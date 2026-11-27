@@ -22,7 +22,7 @@
 	--ytv-motion:                    200ms cubic-bezier( 0.2, 0, 0, 1 ); /* M3 standard easing */
 }
 
-#pe-theater-shader{
+#ytv-theater-shader{
 	display: none;
 	position: fixed;
 	inset: 0;
@@ -32,7 +32,7 @@
 }
 
 /* Largest 16:9 box that fits in 95% of the viewport, centred */
-#pe-theater-video-container{
+#ytv-theater-video-container{
 	display: none;
 	position: fixed;
 	box-sizing: border-box;
@@ -51,7 +51,7 @@
 	z-index: 100002;
 }
 
-#pe-theater-youtube-video{
+#ytv-theater-youtube-video{
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -59,7 +59,7 @@
 }
 
 /* Top app bar style sheet holding the playlist selector */
-#pe-theater-controller{
+#ytv-theater-controller{
 	display: none;
 	position: fixed;
 	box-sizing: border-box;
@@ -77,13 +77,13 @@
 	z-index: 100002;
 }
 
-#pe-theater-controller.is-minimized{
+#ytv-theater-controller.is-minimized{
 	transform: translate( -50%, -100% ); /* Slide up out of view */
 	box-shadow: none;
 }
 
 /* Outlined select field */
-.pe-theater-video-selector{
+.ytv-theater-video-selector{
 	display: none;
 	position: relative;
 	box-sizing: border-box;
@@ -107,27 +107,27 @@
 	transition: border-color var( --ytv-motion );
 }
 
-.pe-theater-video-selector:hover{
+.ytv-theater-video-selector:hover{
 	border-color: var( --ytv-on-surface );
 }
 
-.pe-theater-video-selector:focus-visible{
+.ytv-theater-video-selector:focus-visible{
 	outline: none;
 	border-color: var( --ytv-primary );
 	box-shadow: inset 0 0 0 1px var( --ytv-primary ); /* 2px focus outline without shifting the layout */
 }
 
-.pe-theater-video-selector option{
+.ytv-theater-video-selector option{
 	background-color: var( --ytv-surface-container-highest );
 	color: var( --ytv-on-surface );
 }
 
 /* Tonal tab that hides and shows the controls */
-#pe-theater-controller-button{
+#ytv-theater-controller-button{
 	display: none;
 	position: fixed;
 	box-sizing: border-box;
-	top: var( --pe-theater-controller-height, 0px ); /* Set by the script to sit just under the controller */
+	top: var( --ytv-theater-controller-height, 0px ); /* Set by the script to sit just under the controller */
 	left: 50%;
 	width: 56px;
 	min-width: 0;
@@ -152,7 +152,7 @@
 }
 
 /* Material "expand less" chevron, flipped to "expand more" while minimized */
-#pe-theater-controller-button::before{
+#ytv-theater-controller-button::before{
 	content: "";
 	display: block;
 	width: 24px;
@@ -165,50 +165,50 @@
 }
 
 /* State layer: 8% on hover, 10% on focus and press */
-#pe-theater-controller-button:hover{
+#ytv-theater-controller-button:hover{
 	background-image: linear-gradient( var( --ytv-state-hover ), var( --ytv-state-hover ) );
 }
 
-#pe-theater-controller-button:focus-visible,
-#pe-theater-controller-button:active{
+#ytv-theater-controller-button:focus-visible,
+#ytv-theater-controller-button:active{
 	background-image: linear-gradient( var( --ytv-state-press ), var( --ytv-state-press ) );
 }
 
-#pe-theater-controller-button:focus-visible{
+#ytv-theater-controller-button:focus-visible{
 	outline: 2px solid var( --ytv-primary );
 	outline-offset: 2px;
 }
 
-#pe-theater-controller-button.is-minimized{
+#ytv-theater-controller-button.is-minimized{
 	top: 0;
 	opacity: 0.6;
 }
 
-#pe-theater-controller-button.is-minimized:hover,
-#pe-theater-controller-button.is-minimized:focus-visible{
+#ytv-theater-controller-button.is-minimized:hover,
+#ytv-theater-controller-button.is-minimized:focus-visible{
 	opacity: 1;
 }
 
-#pe-theater-controller-button.is-minimized::before{
+#ytv-theater-controller-button.is-minimized::before{
 	transform: rotate( 180deg );
 }
 
 @media ( prefers-reduced-motion: reduce ){
 
-	#pe-theater-controller,
-	#pe-theater-controller-button,
-	#pe-theater-controller-button::before,
-	.pe-theater-video-selector{
+	#ytv-theater-controller,
+	#ytv-theater-controller-button,
+	#ytv-theater-controller-button::before,
+	.ytv-theater-video-selector{
 		transition: none;
 	}
 
 }
 
 /* Open state, toggled by the script on <html> */
-.pe-theater-active #pe-theater-shader,
-.pe-theater-active #pe-theater-video-container,
-.pe-theater-active #pe-theater-controller,
-.pe-theater-active #pe-theater-controller-button,
-.pe-theater-active .pe-theater-video-selector.is-selected{
+.ytv-theater-active #ytv-theater-shader,
+.ytv-theater-active #ytv-theater-video-container,
+.ytv-theater-active #ytv-theater-controller,
+.ytv-theater-active #ytv-theater-controller-button,
+.ytv-theater-active .ytv-theater-video-selector.is-selected{
 	display: block;
 }

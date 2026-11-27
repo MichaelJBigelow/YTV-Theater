@@ -3,7 +3,7 @@ The YTV Theater is a project aiming to make YouTube video viewing on websites mo
 
 ## Usage
 
-Include `css/ytv-theater.css` and `js/ytv-theater.js` (with `defer`), add the theater markup from `index.html`, and give each playlist a `<select class="pe-theater-video-selector" id="My_Playlist">` whose options' values are YouTube video IDs.
+Include `css/ytv-theater.css` and `js/ytv-theater.js` (with `defer`), add the theater markup from `index.html`, and give each playlist a `<select class="ytv-theater-video-selector" id="My_Playlist">` whose options' values are YouTube video IDs.
 
 Open a playlist from markup:
 
