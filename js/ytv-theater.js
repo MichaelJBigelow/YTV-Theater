@@ -1,200 +1,238 @@
-const theater = {
+/**
+ * YTV Theater
+ *
+ * Shows a YouTube playlist in a full-window theater overlay.
+ *
+ * Open a playlist from markup with `data-ytv-playlist="<select id>"`, or from
+ * script with `theater.open( "<select id>" )`. Every video change dispatches a
+ * `ytv-theater:videochange` event on `document` (useful for analytics).
+ */
+class YTVTheater {
 
-	revision:         "3.29.2020.1",
-	active:           false, // Used to determine if the theater is open or closed
-	controlMaximized: true,
-	videoWidth:       0,
-	videoHeight:      0,
-	videoOffset:      0,
-	playlistTitle:    "", // Selected playlist title
-	shader:           null,
-	playlist:         null,
-	videoContainer:   null,
-	video:            null,
-	controller:       null,
-	controllerButton: null,
+	static revision = "11.27.2026.1";
+
+	static #videoIdPattern = /^[\w-]{11}$/; // YouTube video IDs are 11 URL-safe characters
+
+	#active            = false;
+	#controlsMaximized = true;
+	#playlist          = null; // The <select> of the playlist that is open
+	#elements          = null;
+
+	get active(){
+
+		return this.#active;
+
+	}
+
+	get controlsMaximized(){
+
+		return this.#controlsMaximized;
+
+	}
+
+	get playlistTitle(){
+
+		return this.#playlist?.id ?? "";
+
+	}
 
 	initialize(){
 
-		this.shader           = document.querySelector( "#pe-theater-shader" );
-		this.videoContainer   = document.querySelector( "#pe-theater-video-container" );
-		this.video            = document.querySelector( "#pe-theater-youtube-video" );
-		this.controller       = document.querySelector( "#pe-theater-controller" );
-		this.controllerButton = document.querySelector( "#pe-theater-controller-button" );
+		if( this.#elements ){ // Safe to call more than once
 
-		if( window.addEventListener ){ // Detects window resize and calls autoResize() to adjust viewing area
-
-			window.addEventListener( "resize", () => { theater.setSize(); }, false );
+			return true;
 
 		}
 
-	},
+		const elements = {
+			shader:           document.getElementById( "pe-theater-shader" ),
+			videoContainer:   document.getElementById( "pe-theater-video-container" ),
+			video:            document.getElementById( "pe-theater-youtube-video" ),
+			controller:       document.getElementById( "pe-theater-controller" ),
+			controllerButton: document.getElementById( "pe-theater-controller-button" ),
+		};
 
-	open( selectedList ){
+		const missing = Object.entries( elements ).filter( ( [ , element ] ) => element === null );
 
-		this.playlistTitle    = selectedList;
-		this.playlist         = document.querySelector( "#" + this.playlistTitle );
+		if( missing.length > 0 ){
 
-		if( this.playlist === null ){ // Check for valid video list
+			console.error( `YTV Theater: missing required elements: ${missing.map( ( [ name ] ) => name ).join( ", " )}.` );
+			return false;
 
-			let errorMessage = '';
+		}
 
-			if( typeof selectedList === "undefined" || selectedList === "" ){
+		this.#elements = elements;
 
-				errorMessage = "That is not a valid playlist name.";
+		const { shader, controller, controllerButton } = elements;
 
-			}else{
+		shader.addEventListener( "click", () => this.close() );
+		controllerButton.addEventListener( "click", () => this.toggleControlView() );
 
-				let selectedVideoList = selectedList.replace( /_/g, " " );
-				errorMessage          = `The ${selectedVideoList} playlist could not be found.`;
+		controller.addEventListener( "change", ( event ) => {
+
+			if( event.target.matches( ".pe-theater-video-selector" ) ){
+
+				this.loadVideo( event.target.value );
 
 			}
 
-			alert( errorMessage );
+		} );
+
+		document.addEventListener( "click", ( event ) => {
+
+			const trigger = event.target.closest( "[data-ytv-playlist]" );
+
+			if( trigger ){
+
+				event.preventDefault();
+				this.open( trigger.dataset.ytvPlaylist );
+
+			}
+
+		} );
+
+		// Keep the toggle button pinned under the controller whenever the controller's height changes
+		new ResizeObserver( () => this.#syncControllerButton() ).observe( controller );
+
+		return true;
+
+	}
+
+	open( playlistName ){
+
+		if( !this.initialize() ){
+
 			return;
 
 		}
 
-		this.active                         = true;
-		this.shader.style.display           = "block";
-		this.videoContainer.style.display   = "block";
-		this.controller.style.display       = "block";
-		this.controllerButton.style.display = "block";
-		this.playlist.style.display         = "block"; // Show selected video list
+		const playlist = playlistName ? document.getElementById( playlistName ) : null;
+
+		if( !playlist?.classList.contains( "pe-theater-video-selector" ) ){
+
+			alert( playlistName
+				? `The ${playlistName.replaceAll( "_", " " )} playlist could not be found.`
+				: "That is not a valid playlist name." );
+			return;
+
+		}
+
+		this.#playlist?.classList.remove( "is-selected" ); // Hide any playlist that was already open
+		this.#playlist = playlist;
+		this.#playlist.classList.add( "is-selected" );
+
+		this.#active = true;
+		document.documentElement.classList.add( "pe-theater-active" );
 		this.maximizeControls();
 
-		let defaultVideoSelect = this.playlist.value;
-		defaultVideoSelect     = defaultVideoSelect.replace( / /g, "" );
-		this.loadVideo( defaultVideoSelect );
+		this.loadVideo( playlist.value );
 
-	},
+	}
 
 	close(){
 
-		this.videoContainer.style.display   = "none";
-		this.shader.style.display           = "none";
-		this.controller.style.display       = "none";
-		this.controllerButton.style.display = "none";
-		this.playlist.style.display         = "none"; // Hide selected video list
-		this.active                         = false;
+		if( !this.#active ){
 
-	},
+			return;
+
+		}
+
+		document.documentElement.classList.remove( "pe-theater-active" );
+		this.#playlist?.classList.remove( "is-selected" );
+		this.#elements.video.src = "about:blank"; // Stop playback instead of leaving it running hidden
+		this.#active             = false;
+
+	}
 
 	loadVideo( videoId ){
 
-		if( videoId != "" && videoId.length == 11 ){
+		if( !this.initialize() ){
 
-			this.video.src = `https://www.youtube.com/embed/${videoId}`;
-
-			// Custom Google Analytics tracking code
-			/*let pageValue = '/pe-theater/playlist=' + this.videoList + '&currentVideo=' + videoId;
-
-			ga('send', {
-			  hitType: 'pageview',
-			  page: pageValue
-			});*/
-
-		}else{
-
-			this.video.src = ""; // Unload previous video
-			alert( 'Invalid video ID.' );
+			return false;
 
 		}
 
-		this.setSize(); // Forces layout resize on initialization and video changes.
+		const id = String( videoId ?? "" ).replace( /\s/g, "" );
 
-	},
+		if( !YTVTheater.#videoIdPattern.test( id ) ){
+
+			this.#elements.video.src = "about:blank"; // Unload the previous video
+			alert( "Invalid video ID." );
+			return false;
+
+		}
+
+		this.#elements.video.src = `https://www.youtube.com/embed/${id}`;
+
+		document.dispatchEvent( new CustomEvent( "ytv-theater:videochange", {
+			detail: { playlist: this.playlistTitle, videoId: id },
+		} ) );
+
+		return true;
+
+	}
 
 	toggleControlView(){
 
-		if( this.controlMaximized === false ){
-
-			this.maximizeControls();
-
-		}else{
+		if( this.#controlsMaximized ){
 
 			this.minimizeControls();
 
-		}
+		}else{
 
-	},
-
-	maximizeControls(){
-
-		this.controlMaximized               = true;
-		this.controller.style.top           = '0px';
-		this.controllerButton.style.top     = `${this.controller.offsetHeight}px`;
-		this.controllerButton.style.opacity = '1';
-		this.controllerButton.innerHTML     = '-';
-
-	},
-
-	minimizeControls(){
-
-		this.controlMaximized               = false;
-		this.controller.style.top           = `-${this.controller.offsetHeight}px`;
-		this.controllerButton.style.top     = '0px';
-		this.controllerButton.style.opacity = '0.4';
-		this.controllerButton.innerHTML     = '+';
-
-	},
-
-	setSize(){ // Called when viewer resizes browser window
-
-		// Check if the theater is open
-		if( this.active ){
-
-			let viewHeight       = this.shader.clientHeight;
-			let viewWidth        = this.shader.clientWidth;
-			let availableHeight  = Math.round( viewHeight * 0.95 ); // Window height minus scrollbar
-			let availableWidth   = Math.round( viewWidth * 0.95 ); // Window width minus scrollbar
-			let videoHeight      = 0;
-			let videoWidth       = 0;
-			let aspectRatio      = 0.5625; // YouTube recommended aspect ratio of 16:9
-
-			if( availableHeight > availableWidth ){ // Portrait
-
-				videoWidth  = Math.round( availableWidth ); // Calculate width first
-				videoHeight = Math.round( availableWidth * aspectRatio ); // Apply 16:9 ratio
-
-			}else{ // Landscape
-
-				let viewAspectRatio = availableHeight / availableWidth;
-
-				if( viewAspectRatio > aspectRatio ){
-
-					videoWidth  = Math.round( availableWidth ); // Calculate width first
-					videoHeight = Math.round( availableWidth * aspectRatio ); // Apply 16:9 ratio
-
-				}else{
-
-					videoHeight = Math.round( availableHeight );
-					videoWidth  = Math.round( videoHeight / aspectRatio );
-
-				}
-
-			}
-
-			// Set video container size
-			this.videoContainer.style.height = `${videoHeight}px`;
-			this.videoContainer.style.width  = `${videoWidth}px`;
-
-			// Set video container position
-			let videoLeftMargin                  = videoWidth / 2;
-			let videoTopPos                      = ( viewHeight - videoHeight ) / 2;
-			this.videoContainer.style.marginLeft = `-${videoLeftMargin}px`;
-			this.videoContainer.style.top        = `${videoTopPos}px`;
-
-			// Set controller position
-			let controllerLeftMargin = this.controller.offsetWidth / 2;
-			this.controller.style.marginLeft = `-${controllerLeftMargin}px`;
-
-			// Set controller button position
-			let controllerBtnLeftMargin = this.controllerButton.offsetWidth / 2;
-			this.controllerButton.style.marginLeft = `-${controllerBtnLeftMargin}px`;
+			this.maximizeControls();
 
 		}
 
 	}
+
+	maximizeControls(){
+
+		this.#setControlsMaximized( true );
+
+	}
+
+	minimizeControls(){
+
+		this.#setControlsMaximized( false );
+
+	}
+
+	#setControlsMaximized( maximized ){
+
+		if( !this.initialize() ){
+
+			return;
+
+		}
+
+		const { controller, controllerButton } = this.#elements;
+
+		this.#controlsMaximized = maximized;
+		controller.classList.toggle( "is-minimized", !maximized );
+		controllerButton.classList.toggle( "is-minimized", !maximized );
+		controllerButton.textContent = maximized ? "-" : "+";
+		this.#syncControllerButton();
+
+	}
+
+	#syncControllerButton(){
+
+		const { controller, controllerButton } = this.#elements;
+		controllerButton.style.setProperty( "--pe-theater-controller-height", `${controller.offsetHeight}px` );
+
+	}
+
+}
+
+const theater = new YTVTheater();
+
+if( document.readyState === "loading" ){
+
+	document.addEventListener( "DOMContentLoaded", () => theater.initialize(), { once: true } );
+
+}else{
+
+	theater.initialize();
 
 }
