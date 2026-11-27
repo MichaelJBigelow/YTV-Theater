@@ -9,7 +9,7 @@
  */
 class YTVTheater {
 
-	static revision = "11.27.2026.2";
+	static revision = "11.27.2026.3";
 
 	static #videoIdPattern = /^[\w-]{11}$/; // YouTube video IDs are 11 URL-safe characters
 
@@ -73,6 +73,26 @@ class YTVTheater {
 		if( location.protocol === "file:" ){
 
 			console.warn( "YTV Theater: YouTube embeds need a Referer header, which pages opened from file:// cannot send. Serve this page over http(s) or the player will show Error 153." );
+
+		}
+
+		controller.setAttribute( "aria-label", "Video list" );
+		controllerButton.setAttribute( "aria-controls", controller.id );
+
+		if( !( controllerButton instanceof HTMLButtonElement ) ){ // Older markup used a <div>; keep it keyboard reachable
+
+			controllerButton.setAttribute( "role", "button" );
+			controllerButton.tabIndex = 0;
+			controllerButton.addEventListener( "keydown", ( event ) => {
+
+				if( event.key === "Enter" || event.key === " " ){
+
+					event.preventDefault();
+					this.toggleControlView();
+
+				}
+
+			} );
 
 		}
 
@@ -222,7 +242,10 @@ class YTVTheater {
 		this.#controlsMaximized = maximized;
 		controller.classList.toggle( "is-minimized", !maximized );
 		controllerButton.classList.toggle( "is-minimized", !maximized );
-		controllerButton.textContent = maximized ? "-" : "+";
+		controllerButton.textContent = ""; // The icon comes from the stylesheet
+		controllerButton.setAttribute( "aria-expanded", String( maximized ) );
+		controllerButton.setAttribute( "aria-label", maximized ? "Hide video list" : "Show video list" );
+		controllerButton.title = controllerButton.getAttribute( "aria-label" );
 		this.#syncControllerButton();
 
 	}

@@ -1,8 +1,29 @@
+/*
+ * YTV Theater, styled after Material Design 3 (dark scheme).
+ * Override these custom properties on :root to theme the theater.
+ */
+:root{
+	--ytv-primary:                   #a8c7fa;
+	--ytv-on-primary:                #062e6f;
+	--ytv-surface-container:         #1e1f22;
+	--ytv-surface-container-highest: #36373b;
+	--ytv-on-surface:                #e3e3e6;
+	--ytv-on-surface-variant:        #c4c6cf;
+	--ytv-outline:                   #8e9099;
+	--ytv-scrim:                     rgba( 0, 0, 0, 0.9 );
+	--ytv-font:                      Roboto, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+	--ytv-elevation-2:               0 1px 2px 0 rgba( 0, 0, 0, 0.3 ), 0 2px 6px 2px rgba( 0, 0, 0, 0.15 );
+	--ytv-elevation-3:               0 1px 3px 0 rgba( 0, 0, 0, 0.3 ), 0 4px 8px 3px rgba( 0, 0, 0, 0.15 );
+	--ytv-shape-medium:              12px;
+	--ytv-shape-extra-small:         4px;
+	--ytv-motion:                    200ms cubic-bezier( 0.2, 0, 0, 1 ); /* M3 standard easing */
+}
+
 #pe-theater-shader{
 	display: none;
 	position: fixed;
 	inset: 0;
-	background-color: rgb( 10, 10, 10 );
+	background-color: var( --ytv-scrim );
 	cursor: pointer;
 	z-index: 100000;
 }
@@ -19,6 +40,10 @@
 	aspect-ratio: 16 / 9;
 	padding: 0;
 	margin: 0;
+	border-radius: var( --ytv-shape-medium );
+	box-shadow: var( --ytv-elevation-3 );
+	background-color: #000;
+	overflow: hidden;
 	transform: translate( -50%, -50% );
 	z-index: 100002;
 }
@@ -30,6 +55,7 @@
 	border: 0;
 }
 
+/* Top app bar style sheet holding the playlist selector */
 #pe-theater-controller{
 	display: none;
 	position: fixed;
@@ -37,56 +63,135 @@
 	max-width: 90%;
 	top: 0;
 	left: 50%;
-	padding: 14px;
-	border-color: #DDDDDD;
-	border-width: 0px 2px 2px 2px;
-	border-style: solid;
-	border-radius: 0px 0px 5px 5px;
-	background-color: rgba( 34, 34, 34, 0.8 );
+	padding: 12px 16px;
+	border: 0;
+	border-radius: 0 0 var( --ytv-shape-medium ) var( --ytv-shape-medium );
+	background-color: var( --ytv-surface-container );
+	box-shadow: var( --ytv-elevation-2 );
 	overflow-x: hidden;
 	transform: translateX( -50% );
+	transition: transform var( --ytv-motion );
 	z-index: 100002;
-	opacity: 1;
 }
 
 #pe-theater-controller.is-minimized{
 	transform: translate( -50%, -100% ); /* Slide up out of view */
+	box-shadow: none;
 }
 
+/* Outlined select field */
 .pe-theater-video-selector{
 	display: none;
 	position: relative;
+	box-sizing: border-box;
 	max-width: 100%;
-	padding: 6px;
-	font: 16px/100% Arial, Helvetica, sans-serif;
+	min-height: 48px;
+	padding: 12px 44px 12px 16px;
+	border: 1px solid var( --ytv-outline );
+	border-radius: var( --ytv-shape-extra-small );
+	background-color: transparent;
+	/* Material "arrow drop down" icon */
+	background-image: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c4c6cf'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E" );
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 24px;
+	color: var( --ytv-on-surface );
+	font: 400 16px/24px var( --ytv-font );
+	letter-spacing: 0.5px;
+	text-overflow: ellipsis;
+	appearance: none;
 	cursor: pointer;
+	transition: border-color var( --ytv-motion );
 }
 
+.pe-theater-video-selector:hover{
+	border-color: var( --ytv-on-surface );
+}
+
+.pe-theater-video-selector:focus-visible{
+	outline: none;
+	border-color: var( --ytv-primary );
+	box-shadow: inset 0 0 0 1px var( --ytv-primary ); /* 2px focus outline without shifting the layout */
+}
+
+.pe-theater-video-selector option{
+	background-color: var( --ytv-surface-container-highest );
+	color: var( --ytv-on-surface );
+}
+
+/* Tonal tab that hides and shows the controls */
 #pe-theater-controller-button{
 	display: none;
 	position: fixed;
 	box-sizing: border-box;
 	top: var( --pe-theater-controller-height, 0px ); /* Set by the script to sit just under the controller */
 	left: 50%;
-	height: 20px;
-	width: 50px;
-	font-size: 16px;
-	line-height: 16px;
-	text-align: center;
-	color: #fff;
-	border-color: #fff;
-	border-style: solid;
-	border-width: 0px 2px 2px 2px;
-	border-radius: 0px 0px 5px 5px;
-	background-color: rgba( 34, 34, 34, 0.8 );
+	width: 56px;
+	height: 24px;
+	padding: 0;
+	border: 0;
+	border-radius: 0 0 var( --ytv-shape-medium ) var( --ytv-shape-medium );
+	background-color: var( --ytv-surface-container );
+	box-shadow: var( --ytv-elevation-2 );
+	color: var( --ytv-on-surface-variant );
+	font-size: 0; /* Any text left in older markup is replaced by the icon */
 	transform: translateX( -50% );
+	transition: top var( --ytv-motion ), opacity var( --ytv-motion );
 	cursor: pointer;
 	z-index: 100002;
 }
 
+/* Material "expand less" chevron, flipped to "expand more" while minimized */
+#pe-theater-controller-button::before{
+	content: "";
+	display: block;
+	width: 24px;
+	height: 24px;
+	margin: 0 auto;
+	background-color: currentColor;
+	-webkit-mask: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z'/%3E%3C/svg%3E" ) center / 24px no-repeat;
+	mask: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z'/%3E%3C/svg%3E" ) center / 24px no-repeat;
+	transition: transform var( --ytv-motion );
+}
+
+/* State layer: 8% on hover, 10% on focus and press */
+#pe-theater-controller-button:hover{
+	background-image: linear-gradient( rgba( 227, 227, 230, 0.08 ), rgba( 227, 227, 230, 0.08 ) );
+}
+
+#pe-theater-controller-button:focus-visible,
+#pe-theater-controller-button:active{
+	background-image: linear-gradient( rgba( 227, 227, 230, 0.1 ), rgba( 227, 227, 230, 0.1 ) );
+}
+
+#pe-theater-controller-button:focus-visible{
+	outline: 2px solid var( --ytv-primary );
+	outline-offset: 2px;
+}
+
 #pe-theater-controller-button.is-minimized{
 	top: 0;
-	opacity: 0.4;
+	opacity: 0.6;
+}
+
+#pe-theater-controller-button.is-minimized:hover,
+#pe-theater-controller-button.is-minimized:focus-visible{
+	opacity: 1;
+}
+
+#pe-theater-controller-button.is-minimized::before{
+	transform: rotate( 180deg );
+}
+
+@media ( prefers-reduced-motion: reduce ){
+
+	#pe-theater-controller,
+	#pe-theater-controller-button,
+	#pe-theater-controller-button::before,
+	.pe-theater-video-selector{
+		transition: none;
+	}
+
 }
 
 /* Open state, toggled by the script on <html> */

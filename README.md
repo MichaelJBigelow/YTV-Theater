@@ -22,3 +22,16 @@ document.addEventListener("ytv-theater:videochange", (event) => {
 	console.log(event.detail.playlist, event.detail.videoId);
 });
 ```
+
+## Theming
+
+The theater follows Material Design 3 (dark scheme). Override its custom properties on `:root` to match your site, for example:
+
+```css
+:root{
+	--ytv-primary: #ffb4ab;
+	--ytv-surface-container: #201a19;
+}
+```
+
+See the top of `css/ytv-theater.css` for the full list.
