@@ -13,6 +13,8 @@ Open a playlist from markup:
 
 or from script with `theater.open("My_Playlist")`. The theater initializes itself when the page loads.
 
+Serve the page over `http(s)`. YouTube only plays embeds whose request carries a `Referer` header, so a page opened straight from disk (`file://`) shows "Error 153: Video player configuration error". The theater sets `referrerpolicy="strict-origin-when-cross-origin"` on the player so the page's origin is sent even when the site's own referrer policy is stricter.
+
 Each time a video loads, a `ytv-theater:videochange` event is dispatched on `document` with `{ playlist, videoId }` in its `detail`, which you can use for analytics:
 
 ```js
