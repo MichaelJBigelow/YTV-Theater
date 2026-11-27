@@ -1,28 +1,33 @@
 #pe-theater-shader{
 	display: none;
 	position: fixed;
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
+	inset: 0;
 	background-color: rgb( 10, 10, 10 );
 	cursor: pointer;
 	z-index: 100000;
 }
 
+/* Largest 16:9 box that fits in 95% of the viewport, centred */
 #pe-theater-video-container{
 	display: none;
 	position: fixed;
 	box-sizing: border-box;
+	top: 50%;
 	left: 50%;
+	width: min( 95%, 95vh * 16 / 9 );
+	width: min( 95%, 95dvh * 16 / 9 ); /* Use the visible height on mobile browsers that support it */
+	aspect-ratio: 16 / 9;
 	padding: 0;
 	margin: 0;
+	transform: translate( -50%, -50% );
 	z-index: 100002;
 }
 
 #pe-theater-youtube-video{
+	display: block;
 	width: 100%;
 	height: 100%;
+	border: 0;
 }
 
 #pe-theater-controller{
@@ -39,8 +44,13 @@
 	border-radius: 0px 0px 5px 5px;
 	background-color: rgba( 34, 34, 34, 0.8 );
 	overflow-x: hidden;
+	transform: translateX( -50% );
 	z-index: 100002;
 	opacity: 1;
+}
+
+#pe-theater-controller.is-minimized{
+	transform: translate( -50%, -100% ); /* Slide up out of view */
 }
 
 .pe-theater-video-selector{
@@ -56,7 +66,7 @@
 	display: none;
 	position: fixed;
 	box-sizing: border-box;
-	top: 0;
+	top: var( --pe-theater-controller-height, 0px ); /* Set by the script to sit just under the controller */
 	left: 50%;
 	height: 20px;
 	width: 50px;
@@ -69,6 +79,21 @@
 	border-width: 0px 2px 2px 2px;
 	border-radius: 0px 0px 5px 5px;
 	background-color: rgba( 34, 34, 34, 0.8 );
+	transform: translateX( -50% );
 	cursor: pointer;
 	z-index: 100002;
+}
+
+#pe-theater-controller-button.is-minimized{
+	top: 0;
+	opacity: 0.4;
+}
+
+/* Open state, toggled by the script on <html> */
+.pe-theater-active #pe-theater-shader,
+.pe-theater-active #pe-theater-video-container,
+.pe-theater-active #pe-theater-controller,
+.pe-theater-active #pe-theater-controller-button,
+.pe-theater-active .pe-theater-video-selector.is-selected{
+	display: block;
 }
