@@ -1,14 +1,17 @@
 /*
  * YTV Theater, styled after Material Design 3 (dark scheme).
- * Override these custom properties on :root to theme the theater.
+ * Override these custom properties on :root to theme the theater. The defaults use
+ * :where() so a site's own :root rule wins whichever stylesheet loads first.
  */
-:root{
+:where( :root ){
 	--ytv-primary:                   #a8c7fa;
 	--ytv-on-primary:                #062e6f;
 	--ytv-surface-container:         #1e1f22;
 	--ytv-surface-container-highest: #36373b;
 	--ytv-on-surface:                #e3e3e6;
 	--ytv-on-surface-variant:        #c4c6cf;
+	--ytv-state-hover:               color-mix( in srgb, var( --ytv-on-surface ) 8%, transparent );
+	--ytv-state-press:               color-mix( in srgb, var( --ytv-on-surface ) 10%, transparent );
 	--ytv-outline:                   #8e9099;
 	--ytv-scrim:                     rgba( 0, 0, 0, 0.9 );
 	--ytv-font:                      Roboto, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -90,8 +93,8 @@
 	border: 1px solid var( --ytv-outline );
 	border-radius: var( --ytv-shape-extra-small );
 	background-color: transparent;
-	/* Material "arrow drop down" icon */
-	background-image: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c4c6cf'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E" );
+	/* Material "arrow drop down" icon; set --ytv-select-icon to recolour it for a light scheme */
+	background-image: var( --ytv-select-icon, url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c4c6cf'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E" ) );
 	background-repeat: no-repeat;
 	background-position: right 12px center;
 	background-size: 24px;
@@ -127,14 +130,21 @@
 	top: var( --pe-theater-controller-height, 0px ); /* Set by the script to sit just under the controller */
 	left: 50%;
 	width: 56px;
+	min-width: 0;
 	height: 24px;
+	min-height: 0;
 	padding: 0;
+	margin: 0;
 	border: 0;
 	border-radius: 0 0 var( --ytv-shape-medium ) var( --ytv-shape-medium );
 	background-color: var( --ytv-surface-container );
 	box-shadow: var( --ytv-elevation-2 );
 	color: var( --ytv-on-surface-variant );
+	background-image: none;
 	font-size: 0; /* Any text left in older markup is replaced by the icon */
+	line-height: 0;
+	text-transform: none;
+	appearance: none;
 	transform: translateX( -50% );
 	transition: top var( --ytv-motion ), opacity var( --ytv-motion );
 	cursor: pointer;
@@ -156,12 +166,12 @@
 
 /* State layer: 8% on hover, 10% on focus and press */
 #pe-theater-controller-button:hover{
-	background-image: linear-gradient( rgba( 227, 227, 230, 0.08 ), rgba( 227, 227, 230, 0.08 ) );
+	background-image: linear-gradient( var( --ytv-state-hover ), var( --ytv-state-hover ) );
 }
 
 #pe-theater-controller-button:focus-visible,
 #pe-theater-controller-button:active{
-	background-image: linear-gradient( rgba( 227, 227, 230, 0.1 ), rgba( 227, 227, 230, 0.1 ) );
+	background-image: linear-gradient( var( --ytv-state-press ), var( --ytv-state-press ) );
 }
 
 #pe-theater-controller-button:focus-visible{

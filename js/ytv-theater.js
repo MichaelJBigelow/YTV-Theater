@@ -76,6 +76,7 @@ class YTVTheater {
 
 		}
 
+		controller.setAttribute( "role", "region" ); // A generic <div> cannot carry an accessible name
 		controller.setAttribute( "aria-label", "Video list" );
 		controllerButton.setAttribute( "aria-controls", controller.id );
 

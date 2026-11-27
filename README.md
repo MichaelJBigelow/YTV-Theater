@@ -34,4 +34,4 @@ The theater follows Material Design 3 (dark scheme). Override its custom propert
 }
 ```
 
-See the top of `css/ytv-theater.css` for the full list.
+The defaults have zero specificity, so your `:root` rule wins whether it loads before or after the theater's stylesheet. The select's drop-down arrow is an image; for a light scheme, set `--ytv-select-icon` to a darker `url(...)`. See the top of `css/ytv-theater.css` for the full list.
