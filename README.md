@@ -3,15 +3,41 @@ The YTV Theater is a project aiming to make YouTube video viewing on websites mo
 
 ## Usage
 
-Include `css/ytv-theater.css` and `js/ytv-theater.js` (with `defer`), add the theater markup from `index.html`, and give each playlist a `<select class="ytv-theater-video-selector" id="My_Playlist">` whose options' values are YouTube video IDs.
-
-Open a playlist from markup:
+Include `css/ytv-theater.css` and `js/ytv-theater.js` (with `defer`), add the theater markup, and put one `<select class="ytv-theater-video-selector">` per playlist inside `#ytv-theater-controller`. Each select's `id` names the playlist, and its options' values are YouTube video IDs. A complete page:
 
 ```html
-<button type="button" data-ytv-playlist="My_Playlist">My Playlist</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/ytv-theater.css">
+</head>
+<body>
+
+	<!-- Opens the playlist whose select has this id -->
+	<button type="button" data-ytv-playlist="My_Playlist">My Playlist</button>
+
+	<!-- Theater markup -->
+	<div id="ytv-theater-shader"></div>
+	<div id="ytv-theater-video-container">
+		<iframe id="ytv-theater-youtube-video" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+	</div>
+	<div id="ytv-theater-controller">
+		<select class="ytv-theater-video-selector" id="My_Playlist">
+			<option value="Q6aUbwMpz9k">First video title</option>
+			<option value="PyXYDFK22oI">Second video title</option>
+		</select>
+		<!-- More playlists: add another select with its own id -->
+	</div>
+	<button type="button" id="ytv-theater-controller-button" aria-label="Hide video list"></button>
+
+	<script src="js/ytv-theater.js" defer></script>
+</body>
+</html>
 ```
 
-or from script with `theater.open("My_Playlist")`. The theater initializes itself when the page loads.
+Open a playlist from markup with a `data-ytv-playlist` attribute, as above, or from script with `theater.open("My_Playlist")`. The theater initializes itself when the page loads. `index.html` is a working demo.
 
 Serve the page over `http(s)`. YouTube only plays embeds whose request carries a `Referer` header, so a page opened straight from disk (`file://`) shows "Error 153: Video player configuration error". The theater sets `referrerpolicy="strict-origin-when-cross-origin"` on the player so the page's origin is sent even when the site's own referrer policy is stricter.
 
